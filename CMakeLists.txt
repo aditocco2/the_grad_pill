@@ -1,3 +1,28 @@
+##################################################################################
+
+# Configure stuff here then compile your program :thumbs_up:
+
+set(main_source_file "main.c")
+set(dependencies "hub75.c" "hub75.pio") # c/pio files only
+
+set(include_paths "src" "drivers")
+
+set(enable_stdio_uart 0)
+set(enable_stdio_usb 1)
+
+set(libraries 
+    #FreeRTOS-Kernel-Heap4
+    FreeRTOS-Kernel-Static
+    pico_stdlib
+    hardware_pio
+    )
+
+set(PICO_SDK_PATH C:/Users/pluh/.pico-sdk )
+set(FREERTOS_KERNEL_PATH C:/Users/pluh/.FreeRTOS-Kernel)
+
+##################################################################################
+
+
 # == DO NOT EDIT THE FOLLOWING LINES for the Raspberry Pi Pico VS Code Extension to work ==
 if(WIN32)
     set(USERHOME $ENV{USERPROFILE})
@@ -20,51 +45,51 @@ set(CMAKE_EXPORT_COMPILE_COMMANDS ON)
 
 set(PICO_BOARD pico2 CACHE STRING "Board type")
 
-if(WIN32)
-    set(USERHOME $ENV{USERPROFILE})
-else()
-    set(USERHOME $ENV{HOME})
-endif()
-
-# below 3 lines were added
-set(sdkVersion 2.2.0)
-set(toolchainVersion 14_2_Rel1)
-set(picotoolVersion 2.2.0-a4)
-
-set(picoVscode ${USERHOME}/.pico-sdk/cmake/pico-vscode.cmake)
-if (EXISTS ${picoVscode})
-    include(${picoVscode})
-endif()
-
-if(NOT DEFINED PICO_SDK_PATH )
-	set(PICO_SDK_PATH ${USERHOME}/.pico-sdk )
-endif()
-
 include(${PICO_SDK_PATH}/external/pico_sdk_import.cmake)
+include(${FREERTOS_KERNEL_PATH}/portable/ThirdParty/GCC/RP2350_ARM_NTZ/FreeRTOS_Kernel_import.cmake)
 
-project(lightslop2 C CXX ASM)
+project(main C CXX ASM)
 
 pico_sdk_init()
 
-set(FREERTOS_KERNEL_PATH "${USERHOME}/.FreeRTOS-Kernel")
-include(${FREERTOS_KERNEL_PATH}/portable/ThirdParty/GCC/RP2350_ARM_NTZ/FreeRTOS_Kernel_import.cmake)
+# Build Dependencies:
+# Loop over all combos of directory & file
+set(all_c_files "")
+set(all_pio_files "")
+set(file_base_names ${main_source_file} ${dependencies})
+foreach(dir ${include_paths})
+    foreach(file ${file_base_names})
+        # Add C files to a list so add_executable can reference it below
+        if(EXISTS "${CMAKE_CURRENT_SOURCE_DIR}/${dir}/${file}" AND file MATCHES "\\.c$")
+            set(all_c_files ${all_c_files} "${dir}/${file}")
+        endif()
+        # Generate PIO headers for PIO files
+        if(EXISTS "${CMAKE_CURRENT_SOURCE_DIR}/${dir}/${file}" AND file MATCHES "\\.pio$")
+            set(all_pio_files ${all_pio_files} "${dir}/${file}")
+        endif()
+    endforeach()
+endforeach()
 
-add_executable(lightslop2 main.c hub75.c)
+message(STATUS "Files to compile: ${all_c_files}")
 
-pico_generate_pio_header(lightslop2 ${CMAKE_CURRENT_LIST_DIR}/hub75.pio)
+# Add executable with C files
+add_executable(main ${all_c_files})
 
-pico_enable_stdio_uart(lightslop2 0)
-pico_enable_stdio_usb(lightslop2 1)
+# Generate all PIO headers
+foreach(file ${all_pio_files})
+    pico_generate_pio_header(main "${CMAKE_CURRENT_LIST_DIR}/${file}")
+endforeach()
 
-target_link_libraries(lightslop2
-    #FreeRTOS-Kernel-Heap4
-    FreeRTOS-Kernel-Static
-    pico_stdlib
-    hardware_pio
+pico_enable_stdio_uart(main ${enable_stdio_uart})
+pico_enable_stdio_usb(main ${enable_stdio_usb})
+
+target_link_libraries(main
+    ${libraries}
     )
 
-target_include_directories(lightslop2 PUBLIC
-        ${CMAKE_CURRENT_LIST_DIR}
+target_include_directories(main PUBLIC
+    ${CMAKE_CURRENT_LIST_DIR}
+    ${include_paths}
 )
 
-pico_add_extra_outputs(lightslop2)
+pico_add_extra_outputs(main)

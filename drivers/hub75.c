@@ -6,8 +6,6 @@
 #include "hardware/pio.h"
 #include "hub75.pio.h"
 
-#include "mountains_128x64_rgb565.h"
-
 #define DATA_BASE_PIN 0
 #define DATA_N_PINS 6
 #define ROWSEL_BASE_PIN 6
@@ -31,7 +29,7 @@ static uint32_t row_prog_offs;
 static uint16_t *image;
 
 void hub75_configure();
-void hub75_load_image();
+void hub75_load_image(uint16_t *image_pointer);
 void hub75_refresh();
 static inline uint32_t gamma_correct_565_888(uint16_t pix);
 

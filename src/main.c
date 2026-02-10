@@ -4,9 +4,9 @@
 #include <pico/stdlib.h>
 #include <stdio.h>
 #include "hub75.h"
-#include "ecd1015.h"
+#include "images/ecd1015.h"
 
-#define BUTTON_PIN 15
+#define BUTTON_PIN 20
 
 #define HUB75_STACK_SIZE 20000
 #define BUTTON_STACK_SIZE 128
