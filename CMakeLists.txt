@@ -2,8 +2,8 @@
 
 # Configure stuff here then compile your program :thumbs_up:
 
-set(main_source_file "test_sd_card.c")
-set(dependencies "sd_card.c") # c/pio files only
+set(main_source_file "one_gif.c")
+set(dependencies "sd_card.c" "hub75.c" "hub75.pio") # c/pio files only
 
 set(include_paths "src" "drivers")
 
@@ -18,8 +18,14 @@ set(libraries
     hardware_spi
     )
 
-set(PICO_SDK_PATH C:/Users/pluh/.pico-sdk )
-set(FREERTOS_KERNEL_PATH C:/Users/pluh/.FreeRTOS-Kernel)
+if(WIN32)
+    set(USERHOME $ENV{USERPROFILE})
+else()
+    set(USERHOME $ENV{HOME})
+endif()
+
+set(PICO_SDK_PATH ${USERHOME}/.pico-sdk)
+set(FREERTOS_KERNEL_PATH ${USERHOME}/.FreeRTOS-Kernel)
 
 ##################################################################################
 

@@ -17,6 +17,7 @@
 #define SCLK 18
 #define MOSI 19
 
+#define INIT_RATE 250000
 #define DATA_RATE 20000000
 #define TIMEOUT_MS 300
 
@@ -24,6 +25,9 @@
 static const uint8_t high = 0xFF;
 static const uint8_t zero = 0x00;
 static uint8_t dummy;
+
+// timer for timeout shenanigans
+absolute_time_t start_time;
 
 _Bool sd_card_init();
 _Bool sd_card_write_block(uint32_t block_addr, const void *buffer, uint16_t buffer_size);
@@ -35,6 +39,8 @@ static uint8_t read_response();
 static _Bool wait_card_busy();
 static void send_dummy_byte();
 static void wait_for_data_start();
+static void reset_timer();
+static _Bool timeout();
 
 static void send_cmd(uint8_t cmd, uint32_t arg, uint8_t crc){
     wait_card_busy();
@@ -48,15 +54,23 @@ static void send_dummy_byte(){
     spi_write_blocking(spi0, &high, 1);
 }
 
+static void reset_timer(){
+    start_time = get_absolute_time();
+}
+
+static _Bool timeout(){
+    uint32_t timer_value_us = absolute_time_diff_us(start_time, get_absolute_time());
+    return (timer_value_us >= 1000 * TIMEOUT_MS);
+}
+
 // keep going until we get a byte that's not 0xFF (or timeout)
 static uint8_t read_response(){
-    absolute_time_t start_time = get_absolute_time();
-
+    
+    reset_timer();
     uint8_t response;
     do{
         spi_read_blocking(spi0, 0xFF, &response, 1);
-        absolute_time_t current_time = get_absolute_time();
-        if(absolute_time_diff_us(start_time, current_time) >= 1000 * TIMEOUT_MS){
+        if(timeout()){
             printf("Timeout\n");
             break;
         }
@@ -70,14 +84,13 @@ static uint8_t read_response(){
 static _Bool wait_card_busy(){
 
     uint8_t response = 0xFF;
-    absolute_time_t start_time = get_absolute_time();
+    reset_timer();
     while(1){
         spi_read_blocking(spi0, 0xFF, &response, 1);
         if(response == 0xFF){
             return true;
         }
-        absolute_time_t current_time = get_absolute_time();
-        if(absolute_time_diff_us(start_time, current_time) >= 1000 * TIMEOUT_MS){
+        if(timeout()){
             return false;
         }
     }
@@ -108,7 +121,7 @@ _Bool sd_card_init(){
     gpio_pull_up(MISO);
 
     // must be <400KHz during init
-    spi_init(spi0, 250000);
+    spi_init(spi0, INIT_RATE);
     spi_set_format(spi0, 8, SPI_CPOL_0, SPI_CPHA_0, SPI_MSB_FIRST);
 
     // hold CS high for at least 74 clock cycles to switch the card to native mode
@@ -116,6 +129,7 @@ _Bool sd_card_init(){
         send_dummy_byte();
     }
     gpio_put(CS, 0);
+    send_dummy_byte();
 
     // send CMD0 to reset into idle state
     send_cmd(0, 0, 0x95);
@@ -141,7 +155,8 @@ _Bool sd_card_init(){
     send_dummy_byte();   
 
     // high capacity mode may take a few tries
-    for(uint8_t i = 0; i < 100; i++){
+    reset_timer();
+    while(1){
 
         gpio_put(CS, 0);
         send_dummy_byte();
@@ -157,6 +172,11 @@ _Bool sd_card_init(){
         send_cmd(41, 0x40000000, 0x77);
         if(read_response() == 0x00){
             break;
+        }
+
+        if(timeout()){
+            printf("timeout\n");
+            return false;
         }
 
         gpio_put(CS, 1);
@@ -176,6 +196,7 @@ _Bool sd_card_init(){
 _Bool sd_card_read_block(uint32_t block_addr, uint8_t *buffer, uint16_t buffer_size){
 
     gpio_put(CS, 0);
+    send_dummy_byte();
     
     // send CMD17 single read block with the block address at the parameter
     send_cmd(17, block_addr, 0x01);
