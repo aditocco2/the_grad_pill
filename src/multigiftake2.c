@@ -9,7 +9,7 @@
 #define MEDIA_SWITCH_INTERVAL_MS 5000
 
 uint8_t control_buffer[512];
-uint8_t image_buffer[64 * 64 * 2];
+uint8_t *image_buffer;
 
 // No, you don't understand, we NEED all these variables to be file scope
 uint32_t media_addr;
@@ -31,7 +31,7 @@ void main(void){
     stdio_init_all();
 
     hub75_configure();
-    hub75_load_image((uint16_t *)image_buffer);
+    image_buffer = (uint8_t *)hub75_get_back_buffer();
 
     // try to load number of gifs until success
     while(!sd_init_flag){

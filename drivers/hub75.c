@@ -27,8 +27,8 @@ static PIO pio = pio0;
 static uint32_t data_prog_offs;
 static uint32_t row_prog_offs;
 
-// this one is made externally and edited on
-static uint16_t *back_buffer;
+// this one is edited on
+static uint16_t back_buffer[WIDTH * HEIGHT];
 // this one is actually sent to the screen
 static uint16_t front_buffer[WIDTH * HEIGHT];
 
@@ -38,6 +38,7 @@ dma_channel_config dma_config;
 
 void hub75_configure();
 void hub75_load_image(uint16_t *image_pointer);
+void *hub75_get_back_buffer();
 void hub75_refresh();
 static inline uint32_t gamma_correct_565_888(uint16_t pix);
 
@@ -68,7 +69,16 @@ void hub75_configure(){
 }
 
 void hub75_load_image(uint16_t *image_pointer){
-    back_buffer = image_pointer;
+    // copy from image pointer to back buffer
+    dma_channel_configure(
+        dma_channel, &dma_config,
+        back_buffer, image_pointer,
+        WIDTH * HEIGHT, true
+    );
+}
+
+void *hub75_get_back_buffer(){
+    return back_buffer;
 }
 
 void hub75_push(){

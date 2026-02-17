@@ -3,6 +3,7 @@
 
 void hub75_configure();
 void hub75_load_image(uint16_t *image_pointer);
+void *hub75_get_back_buffer();
 void hub75_push();
 void hub75_refresh();
 
