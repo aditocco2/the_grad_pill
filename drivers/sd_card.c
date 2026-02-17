@@ -12,6 +12,8 @@
 #include <stdio.h>
 #include <pico/stdlib.h>
 
+//define DEBUG
+
 #define MISO 16
 #define CS 17
 #define SCLK 18
@@ -71,7 +73,9 @@ static uint8_t read_response(){
     do{
         spi_read_blocking(spi0, 0xFF, &response, 1);
         if(timeout()){
-            printf("Timeout\n");
+            #ifdef DEBUG 
+            printf("Timeout waiting for response\n"); 
+            #endif
             break;
         }
     } while(response == 0xFF);
@@ -134,7 +138,9 @@ _Bool sd_card_init(){
     // send CMD0 to reset into idle state
     send_cmd(0, 0, 0x95);
     if(read_response() != 0x01){
-        printf("did not respond to cmd0\n");
+        #ifdef DEBUG 
+        printf("SD card did not respond to CMD0\n"); 
+        #endif
         gpio_put(CS, 1);
         return false;
     }
@@ -146,7 +152,9 @@ _Bool sd_card_init(){
     // verify V2 with CMD8
     send_cmd(8, 0x01AA, 0x87);
     if(read_response() != 0x01){
-        printf("did not respond to cmd8\n");
+        #ifdef DEBUG 
+        printf("SD card did not respond to CMD8\n"); 
+        #endif
         gpio_put(CS, 1);
         return false;
     }
@@ -175,7 +183,10 @@ _Bool sd_card_init(){
         }
 
         if(timeout()){
-            printf("timeout\n");
+            #ifdef DEBUG 
+            printf("Timeout waiting for CMD41/CMD55 chain\n"); 
+            #endif
+            gpio_put(CS, 1);
             return false;
         }
 
@@ -184,7 +195,6 @@ _Bool sd_card_init(){
 
     gpio_put(CS, 1);
 
-    // extra dummy byte
     send_dummy_byte();
 
     // now that init is over, we can up the bitrate
@@ -201,6 +211,9 @@ _Bool sd_card_read_block(uint32_t block_addr, uint8_t *buffer, uint16_t buffer_s
     // send CMD17 single read block with the block address at the parameter
     send_cmd(17, block_addr, 0x01);
     if(read_response() != 0x00){
+        #ifdef DEBUG 
+        printf("SD card did not respond to CMD17\n"); 
+        #endif
         gpio_put(CS, 1);
         return false;
     }
@@ -232,6 +245,9 @@ _Bool sd_card_read_blocks(uint32_t block_addr, uint16_t num_blocks, uint8_t *buf
     // send CMD18 to read multiblock
     send_cmd(18, block_addr, 0x57);
     if(read_response() != 0x00){
+        #ifdef DEBUG 
+        printf("SD card did not respond to CMD18\n"); 
+        #endif
         gpio_put(CS, 1);
         return false;
     }
@@ -263,6 +279,9 @@ _Bool sd_card_write_block(uint32_t block_addr, const void *buffer, uint16_t buff
     // send CMD24 to write a block
     send_cmd(24, block_addr, 0x01);
     if(read_response() != 0x00){
+        #ifdef DEBUG 
+        printf("SD card did not respond to CMD17\n"); 
+        #endif
         gpio_put(CS, 1);
         return false;
     }

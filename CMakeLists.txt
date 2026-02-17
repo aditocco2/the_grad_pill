@@ -15,6 +15,7 @@ set(libraries
     FreeRTOS-Kernel-Static
     pico_stdlib
     pico_rand
+    hardware_sync
     hardware_pio
     hardware_spi
     hardware_dma
