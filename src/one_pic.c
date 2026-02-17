@@ -33,6 +33,7 @@ void main(void){
 void hub75_task(__unused void *params){
     hub75_configure();
     hub75_load_image((uint16_t*)ecd1015);
+    hub75_push();
 
     while(1){
         if(hub75_on){

@@ -105,6 +105,8 @@ void sd_card_task(__unused void *params){
             frame_num = 0;
         }
 
+        hub75_push();
+
         vTaskDelayUntil(&last_time, pdMS_TO_TICKS(33));
     }
 

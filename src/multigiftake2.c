@@ -136,5 +136,7 @@ _Bool read_frame(){
         frame_num = 0;
     }
 
+    hub75_push();
+
     return true;
 }

@@ -4,6 +4,7 @@
 #include "pico/stdlib.h"
 #include "hardware/gpio.h"
 #include "hardware/pio.h"
+#include "hardware/dma.h"
 #include "hub75.pio.h"
 
 #define DATA_BASE_PIN 0
@@ -26,7 +27,14 @@ static PIO pio = pio0;
 static uint32_t data_prog_offs;
 static uint32_t row_prog_offs;
 
-static uint16_t *image;
+// this one is made externally and edited on
+static uint16_t *back_buffer;
+// this one is actually sent to the screen
+static uint16_t front_buffer[WIDTH * HEIGHT];
+
+// DMA channels
+int dma_channel;
+dma_channel_config dma_config;
 
 void hub75_configure();
 void hub75_load_image(uint16_t *image_pointer);
@@ -50,10 +58,26 @@ void hub75_configure(){
 
     hub75_data_rgb888_program_init(pio, DATA_SM, data_prog_offs, DATA_BASE_PIN, CLK_PIN);
     hub75_row_program_init(pio, ROW_SM, row_prog_offs, ROWSEL_BASE_PIN, ROWSEL_N_PINS, STROBE_PIN);
+
+    // Also setup DMA controller to later copy between buffers
+    dma_channel = dma_claim_unused_channel(true);
+    dma_config = dma_channel_get_default_config(dma_channel);
+    channel_config_set_transfer_data_size(&dma_config, DMA_SIZE_16);
+    channel_config_set_read_increment(&dma_config, true);
+    channel_config_set_write_increment(&dma_config, true);
 }
 
 void hub75_load_image(uint16_t *image_pointer){
-    image = image_pointer;
+    back_buffer = image_pointer;
+}
+
+void hub75_push(){
+    // configures DMA to copy from back buffer to front buffer
+    dma_channel_configure(
+        dma_channel, &dma_config,
+        front_buffer, back_buffer,
+        WIDTH * HEIGHT, true
+    );
 }
 
 void hub75_refresh(){
@@ -65,8 +89,8 @@ void hub75_refresh(){
 
         // Gamma correct every pixel and copy it into rows_to_send
         for (int x = 0; x < WIDTH; ++x) {
-            uint16_t top_pixel = (uint16_t)image[WIDTH * (rowsel) + x];
-            uint16_t bottom_pixel = (uint16_t)image[WIDTH * (HEIGHT / 2 + rowsel) + x];
+            uint16_t top_pixel = (uint16_t)front_buffer[WIDTH * (rowsel) + x];
+            uint16_t bottom_pixel = (uint16_t)front_buffer[WIDTH * (HEIGHT / 2 + rowsel) + x];
 
             rows_to_send[0][x] = gamma_correct_565_888(top_pixel);
             rows_to_send[1][x] = gamma_correct_565_888(bottom_pixel);

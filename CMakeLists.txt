@@ -17,6 +17,7 @@ set(libraries
     pico_rand
     hardware_pio
     hardware_spi
+    hardware_dma
     )
 
 if(WIN32)
