@@ -1,7 +1,7 @@
 import os
 from PIL import Image
 
-input_file = "ecd1015.png"
+input_file = "images/sd_error.png"
 
 width = 64
 height = 64

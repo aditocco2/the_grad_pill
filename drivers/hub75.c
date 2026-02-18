@@ -33,8 +33,8 @@ static uint16_t back_buffer[WIDTH * HEIGHT];
 static uint16_t front_buffer[WIDTH * HEIGHT];
 
 // DMA channels
-int dma_channel;
-dma_channel_config dma_config;
+int dma_channel_back, dma_channel_front;
+dma_channel_config dma_config_back, dma_config_front;
 
 void hub75_configure();
 void hub75_load_image(uint16_t *image_pointer);
@@ -60,18 +60,24 @@ void hub75_configure(){
     hub75_data_rgb888_program_init(pio, DATA_SM, data_prog_offs, DATA_BASE_PIN, CLK_PIN);
     hub75_row_program_init(pio, ROW_SM, row_prog_offs, ROWSEL_BASE_PIN, ROWSEL_N_PINS, STROBE_PIN);
 
-    // Also setup DMA controller to later copy between buffers
-    dma_channel = dma_claim_unused_channel(true);
-    dma_config = dma_channel_get_default_config(dma_channel);
-    channel_config_set_transfer_data_size(&dma_config, DMA_SIZE_16);
-    channel_config_set_read_increment(&dma_config, true);
-    channel_config_set_write_increment(&dma_config, true);
+    // Also setup DMA controllers to later copy between buffers
+    dma_channel_back = dma_claim_unused_channel(true);
+    dma_config_back = dma_channel_get_default_config(dma_channel_back);
+    channel_config_set_transfer_data_size(&dma_config_back, DMA_SIZE_16);
+    channel_config_set_read_increment(&dma_config_back, true);
+    channel_config_set_write_increment(&dma_config_back, true);
+
+    dma_channel_front = dma_claim_unused_channel(true);
+    dma_config_front = dma_channel_get_default_config(dma_channel_front);
+    channel_config_set_transfer_data_size(&dma_config_front, DMA_SIZE_16);
+    channel_config_set_read_increment(&dma_config_front, true);
+    channel_config_set_write_increment(&dma_config_front, true);
 }
 
 void hub75_load_image(uint16_t *image_pointer){
     // copy from image pointer to back buffer
     dma_channel_configure(
-        dma_channel, &dma_config,
+        dma_channel_back, &dma_config_back,
         back_buffer, image_pointer,
         WIDTH * HEIGHT, true
     );
@@ -84,7 +90,7 @@ void *hub75_get_back_buffer(){
 void hub75_push(){
     // configures DMA to copy from back buffer to front buffer
     dma_channel_configure(
-        dma_channel, &dma_config,
+        dma_channel_front, &dma_config_front,
         front_buffer, back_buffer,
         WIDTH * HEIGHT, true
     );

@@ -3,7 +3,7 @@ from PIL import Image, ImageSequence
 
 width, height = 64, 64
 gif_dir = "gifs"
-sd_file = "raw/multigif.img"
+sd_file = "raw/meeting2.img"
 
 image_files = [f"{gif_dir}/{f}" for f in os.listdir(gif_dir)]
 

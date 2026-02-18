@@ -1,11 +1,13 @@
 #include <pico/stdlib.h>
 #include <pico/rand.h>
 #include <pico/time.h>
+#include <hardware/sync.h>
 #include <stdio.h>
 #include "hub75.h"
 #include "sd_card.h"
+#include "images/sd_error.h"
 
-#define MEDIA_SWITCH_INTERVAL_MS 5000
+#define MEDIA_SWITCH_INTERVAL_MS 10000
 
 uint8_t control_buffer[512];
 uint8_t *image_buffer;
@@ -19,13 +21,14 @@ uint32_t frame_num;
 uint8_t block_num_within_frame;
 
 // Control flow flags
-_Bool sd_success, time_to_switch_media, media_switch_in_progress;
+_Bool sd_success, sd_success_prev, time_to_switch_media, media_switch_in_progress;
 
 _Bool read_pixel_data_cb(__unused repeating_timer_t *rt);
 _Bool switch_media_cb(__unused repeating_timer_t *rt);
 void switch_media();
 void read_pixel_data();
 void get_num_media();
+void load_error_message();
 
 struct repeating_timer media_switch_timer, pixel_read_timer;
 
@@ -41,13 +44,19 @@ void main(void){
 
         hub75_refresh();
 
+        if(sd_success_prev && !sd_success){
+            load_error_message();
+        }
+
         if(!sd_success){
-            sd_success = sd_card_init();
+            sd_success = sd_card_init_fsm();
             if(sd_success){
                 get_num_media();
             }
             continue;
         }
+
+        sd_success_prev = true;
 
         if(time_to_switch_media){
             switch_media();
@@ -107,7 +116,6 @@ void switch_media(){
     // Load it from the SD card
     sd_success = sd_card_read_block(sector, control_buffer, 512);
     if(!sd_success){
-        time_to_switch_media = true;
         return;
     }
 
@@ -155,3 +163,9 @@ void read_pixel_data(){
         frame_num = 0;
     }
 }
+
+void load_error_message(){
+    hub75_load_image(sd_error);
+    hub75_push();
+}
+    
