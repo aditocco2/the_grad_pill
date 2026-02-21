@@ -8,8 +8,13 @@
 
 _Bool sd_card_init();
 _Bool sd_card_init_fsm();
-_Bool sd_card_write_block(uint32_t block_addr, const void *buffer, uint16_t buffer_size);
+
 _Bool sd_card_read_block(uint32_t block_addr, uint8_t *buffer, uint16_t buffer_size);
+_Bool sd_card_read_block_non_blocking(uint32_t block_addr, uint8_t *buffer, uint16_t buffer_size, void (*callback)());
+
 _Bool sd_card_read_blocks(uint32_t block_addr, uint16_t num_blocks, uint8_t* buffer);
+
+_Bool sd_card_write_block(uint32_t block_addr, const void *buffer, uint16_t buffer_size);
+
 
 #endif

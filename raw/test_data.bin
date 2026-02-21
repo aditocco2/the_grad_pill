@@ -1,0 +1,9 @@
+This is a test to see if I can read multiple sectors straight on the SD card.
+Basically what this requires is that I have a file longer than 512 bytes.
+And each byte is a character, so I have a lot of characters to type before I get
+to the next sector. So, type away I will. According to all known laws of aviation,
+there is no way a bee should be able to fly. Its wings are too small to get its fat
+little body off the ground. The bee, of course, flies anyway, because bees don't
+care about what humans think is impossible. It says here in File Explorer I surpassed
+512 bytes so I suppose I don't need to type as much here. Let's see if I can read
+sector 1 individually, and then read sector 0 and 1 combined. Nothing ever happens

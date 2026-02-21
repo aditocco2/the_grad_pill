@@ -2,7 +2,7 @@
 
 # Configure stuff here then compile your program :thumbs_up:
 
-set(main_source_file "multigiftake2.c")
+set(main_source_file "test_sd_card.c")
 set(dependencies "sd_card.c" "hub75.c" "hub75.pio") # c/pio files only
 
 set(include_paths "src" "drivers")

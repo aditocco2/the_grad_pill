@@ -2,8 +2,8 @@ import os
 from PIL import Image, ImageSequence
 
 width, height = 64, 64
-gif_dir = "gifs"
-sd_file = "raw/meeting2.img"
+gif_dir = f"{os.path.expanduser('~')}/pictures/funny_gifs"
+sd_file = "raw/pm2.bin"
 
 image_files = [f"{gif_dir}/{f}" for f in os.listdir(gif_dir)]
 
