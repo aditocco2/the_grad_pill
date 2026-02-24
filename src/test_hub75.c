@@ -4,7 +4,7 @@
 #include "hardware/pio.h"
 #include "hardware/dma.h"
 #include "images/test_gradient.h"
-#include "hub75_v2.pio.h"
+#include "hub75.pio.h"
 
 #define DATA_BASE_PIN 0
 #define DATA_N_PINS 6
@@ -46,7 +46,7 @@ void hub75_push();
 void hub75_begin();
 void make_bitplanes(uint16_t *in_565, uint8_t *out_888);
 inline uint32_t rgb565_to_rgb888(uint16_t pix);
-void dma_complete();
+void refresh_cb();
 
 void main(void){
     stdio_init_all();
@@ -64,8 +64,8 @@ void main(void){
     }
 }
 
-int rgb_dma_channel, pw_dma_channel;
-dma_channel_config rgb_dma_config, pw_dma_config;
+int rgb_dma_channel, pw_dma_channel, rgb_reload_channel, pw_reload_channel;
+dma_channel_config rgb_dma_config, pw_dma_config, rgb_reload_config, pw_reload_config;
 
 void hub75_configure(){
     // Get the locations (offsets) of the PIO programs in memory
@@ -76,7 +76,7 @@ void hub75_configure(){
     hub75_data_program_init(pio, DATA_SM, data_prog_offset, DATA_BASE_PIN, CLK_PIN, WIDTH);
     hub75_row_program_init(pio, ROW_SM, row_prog_offset, ROWSEL_BASE_PIN, ROWSEL_N_PINS, STROBE_PIN);
 
-    // initial setup of both DMA channels
+    // initial setup of all 4 DMA channels
     rgb_dma_channel = dma_claim_unused_channel(true);
     rgb_dma_config = dma_channel_get_default_config(rgb_dma_channel);
     channel_config_set_transfer_data_size(&rgb_dma_config, DMA_SIZE_32);
@@ -90,6 +90,22 @@ void hub75_configure(){
     channel_config_set_read_increment(&pw_dma_config, true);
     channel_config_set_write_increment(&pw_dma_config, false);
     channel_config_set_dreq(&pw_dma_config, pio_get_dreq(pio, ROW_SM, true));
+
+    rgb_reload_channel = dma_claim_unused_channel(true);
+    rgb_reload_config = dma_channel_get_default_config(rgb_reload_channel);
+    channel_config_set_transfer_data_size(&rgb_reload_config, DMA_SIZE_32);
+    channel_config_set_read_increment(&rgb_reload_config, false);
+    channel_config_set_write_increment(&rgb_reload_config, false);
+
+    pw_reload_channel = dma_claim_unused_channel(true);
+    pw_reload_config = dma_channel_get_default_config(pw_reload_channel);
+    channel_config_set_transfer_data_size(&pw_reload_config, DMA_SIZE_32);
+    channel_config_set_read_increment(&pw_reload_config, false);
+    channel_config_set_write_increment(&pw_reload_config, false);
+
+    // Setup chaining between them (important to do this after all channels defined)
+    channel_config_set_chain_to(&rgb_dma_config, rgb_reload_channel);
+    channel_config_set_chain_to(&pw_dma_config, pw_reload_channel);
 }
 
 void hub75_load_image(uint16_t * image_pointer){
@@ -102,9 +118,9 @@ void hub75_push(){
 }
 
 void hub75_begin(){
-    // Make RGB DMA trigger an IRQ on completion
-    dma_channel_set_irq0_enabled(rgb_dma_channel, true);
-    irq_set_exclusive_handler(DMA_IRQ_0, dma_complete);
+    // Make reload DMA trigger an IRQ on completion
+    dma_channel_set_irq0_enabled(rgb_reload_channel, true);
+    irq_set_exclusive_handler(DMA_IRQ_0, refresh_cb);
     irq_set_enabled(DMA_IRQ_0, true); 
 
     // Make RGB DMA copy from front buffer to Data SM FIFO
@@ -121,18 +137,30 @@ void hub75_begin(){
         8, false // 8 pulse widths for 8 bits
     );
 
-    // Start both channels
+    // Make RGB Reloader copy front buffer's address to RGB read address register
+    static uint32_t front_buffer_addr = (uint32_t)front_buffer;
+    dma_channel_configure(
+        rgb_reload_channel, &rgb_reload_config,
+        &dma_hw->ch[rgb_dma_channel].al3_read_addr_trig, &front_buffer_addr,
+        1, true
+    );
+
+    // Make PW Reloader copy pulse table's address to PW read address register
+    static uint32_t pulse_buffer_addr = (uint32_t)pulse_width_buffer;
+    dma_channel_configure(
+        pw_reload_channel, &pw_reload_config,
+        &dma_hw->ch[pw_dma_channel].al3_read_addr_trig, &pulse_buffer_addr, 
+        1, true
+    );
+
+    // Start the data channels, which chain to the reloader channels
     dma_channel_start(pw_dma_channel);
     dma_channel_start(rgb_dma_channel);
 }
 
-void dma_complete(){
+void refresh_cb(){
     // CLEAR THE INTERRUPT
-    dma_irqn_acknowledge_channel(0, rgb_dma_channel);
-
-    // reconfigure both DMA channels
-    dma_hw->ch[rgb_dma_channel].al3_read_addr_trig = (uint32_t)front_buffer;
-    dma_hw->ch[pw_dma_channel].al3_read_addr_trig = (uint32_t)pulse_width_buffer;
+    dma_irqn_acknowledge_channel(0, rgb_reload_channel);
 
     refresh_count++;
 }
@@ -164,13 +192,8 @@ void make_bitplanes(uint16_t *in_565, uint8_t *out_888){
 
 inline uint32_t rgb565_to_rgb888(uint16_t pix) {
 
-    // 00000000 00000000 RRRRRGGG GGGBBBBB -> 00000000 BBBBB000 GGGGGG00 RRRRR000
-    // uint8_t r = ((pix & 0xF800) >> 11 << 3);
-    // uint8_t g = ((pix & 0x07E0) >> 5 << 2);
-    // uint8_t b = ((pix & 0x001F) >> 0 << 3);
-    // return (b << 16) | (g << 8) | (r << 0);
-
-    // gamma correct!!!
+    // 00000000 00000000 RRRRRGGG GGGBBBBB -> 00000000 BBBBBBBB GGGGGGGG RRRRRRRR
+    // To do: replace this with a pre-computed lookup table
     uint32_t r_gamma = pix & 0xf800u;
     r_gamma *= r_gamma;
     uint32_t g_gamma = pix & 0x07e0u;
@@ -178,4 +201,11 @@ inline uint32_t rgb565_to_rgb888(uint16_t pix) {
     uint32_t b_gamma = pix & 0x001fu;
     b_gamma *= b_gamma;
     return (b_gamma >> 2 << 16) | (g_gamma >> 14 << 8) | (r_gamma >> 24 << 0);
+
+    // (linear mapping below)
+
+    // uint8_t r = ((pix & 0xF800) >> 11 << 3);
+    // uint8_t g = ((pix & 0x07E0) >> 5 << 2);
+    // uint8_t b = ((pix & 0x001F) >> 0 << 3);
+    // return (b << 16) | (g << 8) | (r << 0);
 }
