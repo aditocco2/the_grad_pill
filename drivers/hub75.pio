@@ -35,7 +35,8 @@ data:
 .wrap                             ; loop back to wrap_target
 
 % c-sdk {
-static inline void hub75_data_program_init(PIO pio, uint sm, uint offset, uint rgb_base_pin, uint clock_pin, uint width) {
+static inline void hub75_data_program_init(PIO pio, uint sm, uint offset, 
+        uint rgb_base_pin, uint clock_pin, uint width) {
     
     // initializes all pins and sets them as output
     pio_sm_set_consecutive_pindirs(pio, sm, rgb_base_pin, 6, true);
@@ -85,7 +86,8 @@ end:
 .wrap
 
 % c-sdk {
-static inline void hub75_row_program_init(PIO pio, uint sm, uint offset, uint row_base_pin, uint n_row_pins, uint latch_base_pin) {
+static inline void hub75_row_program_init(PIO pio, uint sm, uint offset, 
+        uint row_base_pin, uint n_row_pins, uint latch_base_pin, uint height) {
     
     // set rows, LATCH, and OEN as output pins and initialize them
     pio_sm_set_consecutive_pindirs(pio, sm, row_base_pin, n_row_pins, true);
@@ -105,6 +107,11 @@ static inline void hub75_row_program_init(PIO pio, uint sm, uint offset, uint ro
 
     // Join the TX FIFO and RX FIFO to make an 8-word mega-FIFO
     sm_config_set_fifo_join(&c, PIO_FIFO_JOIN_TX);
+
+    // patch the "set y 31" instruction to account for # of rows if different
+    // (for height = 32 it'll initialize the counter to 15 instead of 31)
+    uint16_t instr = pio_encode_set(pio_y, height/2 - 1);
+    pio->instr_mem[offset + hub75_row_offset_entry_point + 1] = instr;
 
     // Set the program counter to the start of the program and go
     pio_sm_init(pio, sm, offset, &c);

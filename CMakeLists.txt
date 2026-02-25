@@ -3,7 +3,7 @@
 # Configure stuff here then compile your program :thumbs_up:
 
 set(main_source_file "test_hub75.c")    
-set(dependencies "hub75.pio") # c/pio files only
+set(dependencies "hub75.c" "hub75.pio") # c/pio files only
 
 set(include_paths "src" "drivers")
 
@@ -18,6 +18,7 @@ set(libraries
     hardware_pio
     hardware_spi
     hardware_dma
+    hardware_sync
     )
 
 if(WIN32)
