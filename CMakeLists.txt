@@ -11,8 +11,6 @@ set(enable_stdio_uart 0)
 set(enable_stdio_usb 1)
 
 set(libraries 
-    # FreeRTOS-Kernel-Heap4
-    # FreeRTOS-Kernel-Static
     pico_stdlib
     pico_rand
     hardware_pio
