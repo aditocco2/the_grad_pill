@@ -43,93 +43,17 @@ static void send_cmd(uint8_t cmd, uint32_t arg, uint8_t crc);
 static uint8_t read_response();
 static _Bool wait_card_busy();
 static void send_dummy_byte();
+static void read_dummy_crc();
 static _Bool wait_for_data_start();
 static void reset_timer();
 static _Bool timer_exceeds_us(uint32_t us);
 static _Bool timeout();
 
-static void send_cmd(uint8_t cmd, uint32_t arg, uint8_t crc){
-    wait_card_busy();
-
-    uint8_t buf[6] = {0x40 | cmd, arg >> 24, arg >> 16, arg >> 8, arg, crc};
-
-    spi_write_blocking(spi0, buf, 6);
-}
-
-static void send_dummy_byte(){
-    spi_write_blocking(spi0, &high, 1);
-}
-
-static void read_dummy_crc(){
-    spi_read_blocking(spi0, 0xFF, &dummy, 2);
-}
-
-static void reset_timer(){
-    start_time = get_absolute_time();
-}
-
-static _Bool timer_exceeds_us(uint32_t time_us){
-    uint32_t timer_value_us = absolute_time_diff_us(start_time, get_absolute_time());
-    return timer_value_us > time_us;
-}
-
-static _Bool timeout(){
-    return timer_exceeds_us(TIMEOUT_MS * 1000);
-}
-
-// keep going until we get a byte that's not 0xFF (or timeout)
-static uint8_t read_response(){
-    reset_timer();
-    uint8_t response;
-    do{
-        spi_read_blocking(spi0, 0xFF, &response, 1);
-        if(timeout()){
-            #ifdef DEBUG 
-            printf("Timeout waiting for response\n"); 
-            #endif
-            break;
-        }
-    } while(response == 0xFF);
-    return response;
-}
-
-// card is busy until we get 0xFF again
-static _Bool wait_card_busy(){
-    uint8_t response = 0xFF;
-    reset_timer();
-    while(1){
-        spi_read_blocking(spi0, 0xFF, &response, 1);
-        if(response == 0xFF){
-            return true;
-        }
-        if(timeout()){
-            return false;
-        }
-    }
-}
-
-// Reading data requires us to wait for a data start token
-static _Bool wait_for_data_start(){
-    reset_timer();
-
-    uint8_t r_byte = 0xFF;
-    while(r_byte != 0xFE){
-        spi_read_blocking(spi0, 0xFF, &r_byte, 1);
-
-        if(timeout()){
-            return false;
-        }
-    }
-
-    return true;
-}
-
 // initialize card, assuming V2
 // sequence:
 // CMD0 -> 0x01
 // CMD8 -> 0x01
-// CMD55
-// CMD41 -> 0x00
+// CMD55 & CMD41 -> 0x00 (loop until success)
 _Bool sd_card_init(){
     
     gpio_init(CS);
@@ -152,7 +76,7 @@ _Bool sd_card_init(){
     gpio_put(CS, 0);
     send_dummy_byte();
 
-    // send CMD0 to reset into idle state
+    // reset into idle state
     send_cmd(0, 0, 0x95);
     if(read_response() != 0x01){
         #ifdef DEBUG 
@@ -166,7 +90,7 @@ _Bool sd_card_init(){
     send_dummy_byte();
     gpio_put(CS, 0);
 
-    // verify V2 with CMD8
+    // verify V2
     send_cmd(8, 0x01AA, 0x87);
     if(read_response() != 0x01){
         #ifdef DEBUG 
@@ -338,5 +262,81 @@ _Bool sd_card_check_status(){
         return false;
     }
     gpio_put(CS, 1);
+    return true;
+}
+
+static void send_cmd(uint8_t cmd, uint32_t arg, uint8_t crc){
+    wait_card_busy();
+
+    uint8_t buf[6] = {0x40 | cmd, arg >> 24, arg >> 16, arg >> 8, arg, crc};
+
+    spi_write_blocking(spi0, buf, 6);
+}
+
+static void send_dummy_byte(){
+    spi_write_blocking(spi0, &high, 1);
+}
+
+static void read_dummy_crc(){
+    spi_read_blocking(spi0, 0xFF, &dummy, 2);
+}
+
+static void reset_timer(){
+    start_time = get_absolute_time();
+}
+
+static _Bool timer_exceeds_us(uint32_t time_us){
+    uint32_t timer_value_us = absolute_time_diff_us(start_time, get_absolute_time());
+    return timer_value_us > time_us;
+}
+
+static _Bool timeout(){
+    return timer_exceeds_us(TIMEOUT_MS * 1000);
+}
+
+// keep going until we get a byte that's not 0xFF (or timeout)
+static uint8_t read_response(){
+    reset_timer();
+    uint8_t response;
+    do{
+        spi_read_blocking(spi0, 0xFF, &response, 1);
+        if(timeout()){
+            #ifdef DEBUG 
+            printf("Timeout waiting for response\n"); 
+            #endif
+            break;
+        }
+    } while(response == 0xFF);
+    return response;
+}
+
+// card is busy until we get 0xFF again
+static _Bool wait_card_busy(){
+    uint8_t response = 0xFF;
+    reset_timer();
+    while(1){
+        spi_read_blocking(spi0, 0xFF, &response, 1);
+        if(response == 0xFF){
+            return true;
+        }
+        if(timeout()){
+            return false;
+        }
+    }
+}
+
+// Reading data requires us to wait for a data start token
+static _Bool wait_for_data_start(){
+    reset_timer();
+
+    uint8_t r_byte = 0xFF;
+    while(r_byte != 0xFE){
+        spi_read_blocking(spi0, 0xFF, &r_byte, 1);
+
+        if(timeout()){
+            return false;
+        }
+    }
+
     return true;
 }

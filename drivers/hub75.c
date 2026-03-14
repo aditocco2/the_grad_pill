@@ -6,6 +6,7 @@
 
 #include <string.h>
 #include "pico/stdlib.h"
+#include "pico/multicore.h"
 #include "hardware/dma.h"
 #include "hardware/pio.h"
 #include "hub75.h"
@@ -23,6 +24,9 @@ static uint32_t front_buffer_b[WIDTH * HEIGHT];
 static uint32_t *active_buffer;
 static uint32_t *inactive_buffer;
 
+// Pulse widths for sending to Row SM
+static uint32_t pw_table[] = {10, 20, 40, 80, 160, 320, 640, 1280};
+
 // 6-bit to 8-bit color mapping
 static const uint8_t cie_brightness_table[64] = {
     0,    0,    1,    1,    2,    2,    3,    3,    4,    5,    5,    6,    7,    8,    9,   10,
@@ -31,19 +35,19 @@ static const uint8_t cie_brightness_table[64] = {
   128,  135,  142,  149,  156,  164,  172,  180,  189,  197,  206,  215,  225,  235,  245,  255
 };
 
-// Pulse widths for sending to Row SM
-static uint32_t pw_table[] = {10, 20, 40, 80, 160, 320, 640, 1280};
-
+// DMA channels to write pixel data / pulse widths to PIO
 int rgb_channel, pw_channel, rgb_reload_channel, pw_reload_channel;
 dma_channel_config rgb_config, pw_config, rgb_reload_config, pw_reload_config;
 
-static void (*refresh_cb)();
+// Core0 -> Core1 notification to make bitplanes
+int update_doorbell;
 
 static PIO pio = PIO_BLOCK;
 static uint32_t data_prog_offset, row_prog_offset;
 
 void hub75_configure();
 void hub75_set_refresh_cb(void (*callback)());
+void hub75_set_update_cb(void (*callback)());
 uint16_t *hub75_get_back_buffer();
 void hub75_load_image();
 void hub75_set_pixel(uint8_t x, uint8_t y, uint16_t rgb565);
@@ -52,8 +56,13 @@ void hub75_update();
 
 static void configure_all_dma();
 static void dma_handler();
+static void (*refresh_cb)();
+static void (*update_cb)();
+static void core1_entry();
+static void core1_doorbell_handler();
 static void make_bitplanes(uint16_t *in_565, uint8_t *out_888);
 static inline uint32_t rgb565_to_rgb888(uint16_t pix);
+
 
 void hub75_configure(){
     // Get the locations of the PIO programs in memory
@@ -64,15 +73,31 @@ void hub75_configure(){
     hub75_data_program_init(pio, DATA_SM, data_prog_offset, RED_0, CLK, WIDTH);
     hub75_row_program_init(pio, ROW_SM, row_prog_offset, ROW_A, NUM_ROW_PINS, LATCH, HEIGHT);
 
-    // initialize pointers
+    // initialize pointers to swap later for double buffering
     active_buffer = front_buffer_a;
     inactive_buffer = front_buffer_b;
 
     configure_all_dma();
+
+    multicore_launch_core1(core1_entry);
 }
 
 uint16_t *hub75_get_back_buffer(){
     return back_buffer;
+}
+
+void hub75_set_refresh_cb(void (*callback)()){
+    // set internal callback to passed-in one
+    refresh_cb = callback;
+    // Make reload DMA trigger an IRQ on completion
+    dma_channel_set_irq0_enabled(rgb_channel, true);
+    irq_set_exclusive_handler(DMA_IRQ_0, dma_handler);
+    irq_set_enabled(DMA_IRQ_0, true); 
+}
+
+void hub75_set_update_cb(void (*callback)()){
+    // set internal callback to passed-in one
+    update_cb = callback;
 }
 
 void hub75_load_image(uint16_t * image_pointer){
@@ -93,28 +118,8 @@ void hub75_set_brightness(uint8_t b){
 }
 
 void hub75_update(){
-    make_bitplanes(back_buffer, (uint8_t *)inactive_buffer);
-
-    uint32_t *temp;
-    temp = active_buffer;
-    active_buffer = inactive_buffer;
-    inactive_buffer = temp;
-
-    // dma_channel_set_read_addr(rgb_reload_channel, &active_buffer, false);
-}
-
-void hub75_set_refresh_cb(void (*callback)()){
-    // set internal callback to passed-in one
-    refresh_cb = callback;
-    // Make reload DMA trigger an IRQ on completion
-    dma_channel_set_irq0_enabled(rgb_channel, true);
-    irq_set_exclusive_handler(DMA_IRQ_0, dma_handler);
-    irq_set_enabled(DMA_IRQ_0, true); 
-}
-
-static void dma_handler(){
-    dma_irqn_acknowledge_channel(0, rgb_channel);
-    (*refresh_cb)();
+    // tell core 1 to make bitplanes and update the display
+    multicore_doorbell_set_other_core(update_doorbell);
 }
 
 static void configure_all_dma(){
@@ -180,6 +185,42 @@ static void configure_all_dma(){
     // Start the data channels, which chain to the reloader channels
     dma_channel_start(pw_channel);
     dma_channel_start(rgb_channel);
+}
+
+static void dma_handler(){
+    dma_irqn_acknowledge_channel(0, rgb_channel);
+    (*refresh_cb)();
+}
+
+static void core1_entry(){
+
+    // Sets up a doorbell (notification) for hub75_update to poke core 1
+    update_doorbell = multicore_doorbell_claim_unused(1 << 1, true);
+    irq_set_exclusive_handler(multicore_doorbell_irq_num(update_doorbell), core1_doorbell_handler);
+    irq_set_enabled(multicore_doorbell_irq_num(update_doorbell), true);
+
+    while(1){
+        __wfe();
+    }
+}
+
+static void core1_doorbell_handler(){
+
+    if(multicore_doorbell_is_set_current_core(update_doorbell)){
+        
+        multicore_doorbell_clear_current_core(update_doorbell);
+
+        make_bitplanes(back_buffer, (uint8_t *)inactive_buffer);
+
+        uint32_t *temp;
+        temp = active_buffer;
+        active_buffer = inactive_buffer;
+        inactive_buffer = temp;
+
+        if(update_cb){
+            update_cb();
+        }
+    }
 }
 
 static void make_bitplanes(uint16_t *in_565, uint8_t *out_888){

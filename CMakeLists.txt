@@ -2,7 +2,7 @@
 
 # Configure stuff here then compile your program :thumbs_up:
 
-set(main_source_file "test_hub75.c")    
+set(main_source_file "test_hub75_multicore.c")    
 set(dependencies "sd_card.c" "hub75.c" "hub75_text.c" "hub75.pio") # c/pio files only
 
 set(include_paths "src" "drivers")
@@ -12,7 +12,8 @@ set(enable_stdio_usb 1)
 
 set(libraries 
     pico_stdlib
-    pico_rand
+    pico_rand    
+    pico_multicore
     hardware_pio
     hardware_spi
     hardware_dma

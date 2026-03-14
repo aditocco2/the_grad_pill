@@ -17,16 +17,14 @@ uint8_t __attribute__((aligned(4))) buffer[WIDTH * HEIGHT * 4];
 absolute_time_t ts;
 
 void make_bitplanes(uint16_t *in_565, uint8_t *out_888);
-inline uint32_t rgb565_to_rgb888(uint16_t pix);
+static inline uint32_t rgb565_to_rgb888(uint16_t pix);
 
-void binprintf(int v)
-{
-    unsigned int mask=1<<((sizeof(int)<<3)-1);
-    while(mask) {
-        printf("%d", (v&mask ? 1 : 0));
-        mask >>= 1;
-    }
-}
+static const uint8_t cie_brightness_table[64] = {
+    0,    0,    1,    1,    2,    2,    3,    3,    4,    5,    5,    6,    7,    8,    9,   10,
+   12,   13,   14,   16,   18,   20,   22,   24,   26,   28,   31,   33,   36,   39,   42,   45,
+   49,   52,   56,   60,   64,   68,   73,   77,   82,   87,   92,   98,  103,  109,  115,  122,
+  128,  135,  142,  149,  156,  164,  172,  180,  189,  197,  206,  215,  225,  235,  245,  255
+};
 
 int main(){
     stdio_init_all();
@@ -39,7 +37,6 @@ int main(){
             continue;
         }
         c = (char)c;
-        // perform bitplane conversion
         if(c == 'c'){
             ts = get_absolute_time();
             make_bitplanes(test_gradient, buffer);
@@ -84,11 +81,16 @@ void make_bitplanes(uint16_t *in_565, uint8_t *out_888){
     }
 }
 
-inline uint32_t rgb565_to_rgb888(uint16_t pix) {
+static inline uint32_t rgb565_to_rgb888(uint16_t pix){
 
     // 00000000 00000000 RRRRRGGG GGGBBBBB -> 00000000 BBBBB000 GGGGGG00 RRRRR000
-    uint8_t r = ((pix & 0xF800) >> 11 << 3);
-    uint8_t g = ((pix & 0x07E0) >> 5 << 2);
-    uint8_t b = ((pix & 0x001F) >> 0 << 3);
+    // Linear map first to 666
+    uint8_t r = ((pix & 0xF800) >> 11 << 1);
+    uint8_t g = ((pix & 0x07E0) >> 5 << 0);
+    uint8_t b = ((pix & 0x001F) >> 0 << 1);
+    // Then light-map to 888
+    r = cie_brightness_table[r];
+    g = cie_brightness_table[g];
+    b = cie_brightness_table[b];
     return (b << 16) | (g << 8) | (r << 0);
 }
