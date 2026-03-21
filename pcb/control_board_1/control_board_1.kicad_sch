@@ -1178,7 +1178,7 @@
 			)
 			(embedded_fonts no)
 		)
-		(symbol "lightslop2:hub75_din_connector"
+		(symbol "overblinking:hub75_din_connector"
 			(exclude_from_sim no)
 			(in_bom yes)
 			(on_board yes)
@@ -1541,7 +1541,7 @@
 			)
 			(embedded_fonts no)
 		)
-		(symbol "lightslop2:jst4_vh_3.96_power"
+		(symbol "overblinking:jst4_vh_3.96_power"
 			(exclude_from_sim no)
 			(in_bom yes)
 			(on_board yes)
@@ -1619,7 +1619,7 @@
 						)
 					)
 				)
-				(pin power_out line
+				(pin passive line
 					(at -1.27 -7.62 270)
 					(length 2.54)
 					(name "VIN"
@@ -1637,7 +1637,7 @@
 						)
 					)
 				)
-				(pin power_out line
+				(pin passive line
 					(at 2.54 -7.62 270)
 					(length 2.54)
 					(name "GND"
@@ -1655,7 +1655,7 @@
 						)
 					)
 				)
-				(pin power_out line
+				(pin passive line
 					(at 6.35 -7.62 270)
 					(length 2.54)
 					(name "GND"
@@ -1676,7 +1676,7 @@
 			)
 			(embedded_fonts no)
 		)
-		(symbol "lightslop2:usd_breakout_adafruit"
+		(symbol "overblinking:usd_breakout_adafruit"
 			(exclude_from_sim no)
 			(in_bom yes)
 			(on_board yes)
@@ -1952,6 +1952,58 @@
 		(diameter 0)
 		(color 0 0 0 0)
 		(uuid "54b2ce37-f929-43f3-b83c-4fad3af8ac6a")
+	)
+	(no_connect
+		(at 130.81 106.68)
+		(uuid "1156e704-d40d-4237-801c-b21f890ca2a4")
+	)
+	(no_connect
+		(at 85.09 60.96)
+		(uuid "15034e44-6350-45e2-bdfc-e4f92f9a8252")
+	)
+	(no_connect
+		(at 130.81 86.36)
+		(uuid "197f36e2-1842-4541-a28b-dafb9a149db2")
+	)
+	(no_connect
+		(at 181.61 85.09)
+		(uuid "96e76ac5-3a15-43c3-89d5-3fa36687eeba")
+	)
+	(no_connect
+		(at 85.09 63.5)
+		(uuid "9e70f32a-bb1b-408a-8654-2522ff964c8c")
+	)
+	(no_connect
+		(at 130.81 83.82)
+		(uuid "9e92f7ec-ef39-402f-b04c-570024acfa2e")
+	)
+	(no_connect
+		(at 130.81 99.06)
+		(uuid "a3a2c207-79f6-4dde-b7a0-66c43346fd7c")
+	)
+	(no_connect
+		(at 130.81 101.6)
+		(uuid "bffe2ccc-e27d-4891-8512-f51810b06fa3")
+	)
+	(no_connect
+		(at 107.95 45.72)
+		(uuid "d0264c38-5b23-4b70-a90f-2169f45f3e43")
+	)
+	(no_connect
+		(at 85.09 106.68)
+		(uuid "db00537d-6e25-413b-9565-f5e1433ae962")
+	)
+	(no_connect
+		(at 130.81 96.52)
+		(uuid "db6a52ba-f075-471c-83bf-f9c771d3aff3")
+	)
+	(no_connect
+		(at 130.81 91.44)
+		(uuid "eb106803-7c5b-4e17-bad7-23e65be7fe9b")
+	)
+	(no_connect
+		(at 181.61 82.55)
+		(uuid "f417f045-fff4-4328-9503-fc5479a4d154")
 	)
 	(wire
 		(pts
@@ -3644,7 +3696,7 @@
 		)
 	)
 	(symbol
-		(lib_id "lightslop2:usd_breakout_adafruit")
+		(lib_id "overblinking:usd_breakout_adafruit")
 		(at 190.5 71.12 270)
 		(unit 1)
 		(exclude_from_sim no)
@@ -3652,24 +3704,26 @@
 		(on_board yes)
 		(dnp no)
 		(fields_autoplaced yes)
-		(uuid "23aef428-c8e4-47fe-87f7-291855b41f5e")
-		(property "Reference" "SD"
-			(at 205.994 77.216 0)
+		(uuid "0e3135b1-7a6a-48ab-8996-a70e81a22292")
+		(property "Reference" "SD1"
+			(at 203.2 76.1999 90)
 			(effects
 				(font
 					(size 1.27 1.27)
 				)
+				(justify left)
 			)
 		)
-		(property "Value" "Adafruit MicroSD Adapter"
-			(at 203.708 77.47 0)
+		(property "Value" "4682 SD Adapter"
+			(at 203.2 78.7399 90)
 			(effects
 				(font
 					(size 1.27 1.27)
 				)
+				(justify left)
 			)
 		)
-		(property "Footprint" ""
+		(property "Footprint" "overblinking:usd_breakout_adafruit"
 			(at 190.5 71.12 0)
 			(effects
 				(font
@@ -3696,44 +3750,118 @@
 				(hide yes)
 			)
 		)
-		(pin "1"
-			(uuid "f0e1281a-ccd8-44e5-bfb5-e0bebc375615")
-		)
-		(pin "3"
-			(uuid "722973c6-3368-4498-88fa-bcc18e630445")
-		)
-		(pin "2"
-			(uuid "78364516-1b22-49af-b96d-ede7867cd0be")
-		)
-		(pin "5"
-			(uuid "258ae35a-a849-49ae-bfdd-8e80da9e9bee")
-		)
-		(pin "6"
-			(uuid "2677e88b-213a-4728-bfde-4bddacd50131")
+		(pin "4"
+			(uuid "9ab65c35-66e0-48e3-becc-b1031951bdd5")
 		)
 		(pin "7"
-			(uuid "7e7ba29f-37ff-4724-b43a-c65ae23f8bc3")
+			(uuid "657b9ed3-4e05-4a5c-8db2-c76d1da8a147")
 		)
 		(pin "8"
-			(uuid "9b371024-a5f6-42cb-9e15-0eece0fde988")
+			(uuid "5938b1f4-9a90-4286-b146-9f26d484dee8")
+		)
+		(pin "3"
+			(uuid "617135c6-caa5-436c-9864-6a7714194936")
+		)
+		(pin "1"
+			(uuid "9452b698-de7e-4341-b8d7-84e88c6d79b7")
+		)
+		(pin "5"
+			(uuid "f7acf824-4551-45f1-9274-405d65d21713")
+		)
+		(pin "2"
+			(uuid "a29eebcb-5f34-4b58-b073-975c050d0b7d")
+		)
+		(pin "6"
+			(uuid "eb1204a1-e89d-41a1-a9ba-69a54889fec0")
 		)
 		(pin "9"
-			(uuid "e045a639-3700-40b3-b3be-4d6b4cb0e6fd")
-		)
-		(pin "4"
-			(uuid "89e2c4ce-d610-4337-b42d-59d848f23051")
+			(uuid "74f7ab5b-96df-46ba-8f41-794d80514879")
 		)
 		(instances
 			(project "control_board_1"
 				(path "/c74dadd3-b9fd-4089-b688-07ec3572b669"
-					(reference "SD")
+					(reference "SD1")
 					(unit 1)
 				)
 			)
 		)
 	)
 	(symbol
-		(lib_id "lightslop2:hub75_din_connector")
+		(lib_id "overblinking:jst4_vh_3.96_power")
+		(at 67.31 161.29 270)
+		(unit 1)
+		(exclude_from_sim no)
+		(in_bom yes)
+		(on_board yes)
+		(dnp no)
+		(fields_autoplaced yes)
+		(uuid "183940c1-6152-4b68-aa1e-895e08c6c782")
+		(property "Reference" "J1"
+			(at 55.245 147.32 90)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Value" "JST4 VH Power"
+			(at 55.245 149.86 90)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Footprint" "Connector_JST:JST_VH_B4PS-VH_1x04_P3.96mm_Horizontal"
+			(at 67.31 161.29 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Datasheet" ""
+			(at 67.31 161.29 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Description" ""
+			(at 67.31 161.29 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(pin "1"
+			(uuid "d88f643b-a52f-45a0-a84c-6ee08a419623")
+		)
+		(pin "3"
+			(uuid "03bb9157-ee87-4d70-a33e-4cc4563b2f55")
+		)
+		(pin "2"
+			(uuid "409e2c0a-df56-46e6-b0f1-0a0fba32dd55")
+		)
+		(pin "4"
+			(uuid "6b9e7ac5-6144-4a13-95d2-4d2dda027710")
+		)
+		(instances
+			(project "control_board_1"
+				(path "/c74dadd3-b9fd-4089-b688-07ec3572b669"
+					(reference "J1")
+					(unit 1)
+				)
+			)
+		)
+	)
+	(symbol
+		(lib_id "overblinking:hub75_din_connector")
 		(at 189.23 109.22 0)
 		(unit 1)
 		(exclude_from_sim no)
@@ -3741,8 +3869,8 @@
 		(on_board yes)
 		(dnp no)
 		(fields_autoplaced yes)
-		(uuid "85cc7573-bb08-43e5-a884-0c49ef8d0af0")
-		(property "Reference" "H1"
+		(uuid "a003a771-99b6-43bf-b84f-3282bc6402f5")
+		(property "Reference" "H2"
 			(at 192.405 106.68 0)
 			(effects
 				(font
@@ -3750,7 +3878,7 @@
 				)
 			)
 		)
-		(property "Value" "HUB75 Connector"
+		(property "Value" "HUB75 Data"
 			(at 192.405 109.22 0)
 			(effects
 				(font
@@ -3758,7 +3886,7 @@
 				)
 			)
 		)
-		(property "Footprint" ""
+		(property "Footprint" "Connector_IDC:IDC-Header_2x08_P2.54mm_Vertical"
 			(at 189.23 109.22 0)
 			(effects
 				(font
@@ -3785,58 +3913,58 @@
 				(hide yes)
 			)
 		)
-		(pin "2"
-			(uuid "df623065-5d5d-4075-8b30-a47381c5ba93")
-		)
-		(pin "4"
-			(uuid "a249983a-dad5-4ad1-b1f0-b002dacc54e2")
-		)
-		(pin "6"
-			(uuid "4dd6cb3d-fe87-4105-bf6d-c603bb7a1d3b")
-		)
-		(pin "8"
-			(uuid "e6b2d177-e515-43df-aa63-49bd702cdad9")
-		)
-		(pin "12"
-			(uuid "5cc9b832-38bc-410f-8680-1b12355dbe94")
-		)
-		(pin "16"
-			(uuid "de1223b3-78b8-45d2-82d9-09c0f69dd3c7")
-		)
-		(pin "11"
-			(uuid "4d386155-917e-4161-a517-fa62d0c9c5df")
-		)
-		(pin "13"
-			(uuid "c4c5d125-b5eb-4357-9700-561f1e777349")
-		)
-		(pin "15"
-			(uuid "2bf5e55d-79ad-4fd1-842e-4e2021d2766c")
+		(pin "7"
+			(uuid "3d82be8d-b6dc-4e81-bd44-dffdd5b9fa75")
 		)
 		(pin "10"
-			(uuid "99f20d74-c431-4d6f-9fa4-04224cf176f3")
+			(uuid "59571805-f1d5-4b8b-87d3-e70dbe645007")
 		)
-		(pin "14"
-			(uuid "329dcb3a-10c1-4198-b0ad-5f47f543ac5d")
+		(pin "16"
+			(uuid "ecb4d836-2bbc-4f41-8f43-5829026f9edb")
 		)
-		(pin "5"
-			(uuid "847318ab-404b-4037-b56a-cda4463dff1f")
+		(pin "2"
+			(uuid "b87e1bed-1e07-4575-b3c7-2125ed426214")
 		)
-		(pin "7"
-			(uuid "06b30452-f88b-4a83-8b8c-0173eb823845")
+		(pin "11"
+			(uuid "611106b2-4269-4aca-b3de-d2df7fbb2ae7")
 		)
 		(pin "9"
-			(uuid "8b5e237c-5f3a-4ddb-8a00-745a2abfe98a")
+			(uuid "6961b238-f4ce-4445-876d-49a3e69fbc9e")
 		)
 		(pin "3"
-			(uuid "1060adf9-17f6-49b1-bfd8-a3af1f8218a3")
+			(uuid "525805d9-ef3a-4d5f-8136-db327fd3988a")
+		)
+		(pin "4"
+			(uuid "a3a6204a-6962-417a-8386-2ce7e8ce1e10")
+		)
+		(pin "12"
+			(uuid "efa72aff-fd4f-4e75-bfa8-24b4677cca05")
+		)
+		(pin "14"
+			(uuid "50f55c11-8e6b-4b72-9d16-e79d81e42751")
 		)
 		(pin "1"
-			(uuid "f27ce37d-f5a3-44d2-9f4e-2c1f75a194e5")
+			(uuid "ce4dcac3-f102-4e46-a281-8c93966af389")
+		)
+		(pin "5"
+			(uuid "901188f8-2d19-42ee-8ffb-a443f040b16d")
+		)
+		(pin "15"
+			(uuid "87c19387-665f-4acb-91c8-da30602012ff")
+		)
+		(pin "6"
+			(uuid "fc2a7c62-3825-4710-8b92-afa2435e4eab")
+		)
+		(pin "8"
+			(uuid "edb11d11-a633-4ae7-8377-af36e2470ed7")
+		)
+		(pin "13"
+			(uuid "9ffb181e-6bbf-408f-89d9-46519c6e552b")
 		)
 		(instances
 			(project "control_board_1"
 				(path "/c74dadd3-b9fd-4089-b688-07ec3572b669"
-					(reference "H1")
+					(reference "H2")
 					(unit 1)
 				)
 			)
@@ -3868,7 +3996,7 @@
 				)
 			)
 		)
-		(property "Footprint" ""
+		(property "Footprint" "Button_Switch_THT:SW_PUSH_6mm"
 			(at 113.03 149.86 0)
 			(effects
 				(font
@@ -3905,80 +4033,6 @@
 			(project "control_board_1"
 				(path "/c74dadd3-b9fd-4089-b688-07ec3572b669"
 					(reference "SW1")
-					(unit 1)
-				)
-			)
-		)
-	)
-	(symbol
-		(lib_id "lightslop2:jst4_vh_3.96_power")
-		(at 67.31 161.29 270)
-		(unit 1)
-		(exclude_from_sim no)
-		(in_bom yes)
-		(on_board yes)
-		(dnp no)
-		(fields_autoplaced yes)
-		(uuid "c97513f5-2fed-4d80-a654-c2032c45ec1c")
-		(property "Reference" "J2"
-			(at 55.245 147.32 90)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-			)
-		)
-		(property "Value" "JST4 Power"
-			(at 55.245 149.86 90)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-			)
-		)
-		(property "Footprint" ""
-			(at 67.31 161.29 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(hide yes)
-			)
-		)
-		(property "Datasheet" ""
-			(at 67.31 161.29 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(hide yes)
-			)
-		)
-		(property "Description" ""
-			(at 67.31 161.29 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(hide yes)
-			)
-		)
-		(pin "1"
-			(uuid "e4a6400a-4e88-417b-99ac-5a970e794aca")
-		)
-		(pin "4"
-			(uuid "01feb0b3-3307-4c80-8f4f-819d6205f9ad")
-		)
-		(pin "3"
-			(uuid "ac02aa09-06dd-4aab-b10f-a90f4be26344")
-		)
-		(pin "2"
-			(uuid "b19d164b-a394-4bc9-af09-41bf3ee5f126")
-		)
-		(instances
-			(project "control_board_1"
-				(path "/c74dadd3-b9fd-4089-b688-07ec3572b669"
-					(reference "J2")
 					(unit 1)
 				)
 			)

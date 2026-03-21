@@ -443,7 +443,7 @@
 					)
 				)
 			)
-			(pin power_out line
+			(pin passive line
 				(at -1.27 -7.62 270)
 				(length 2.54)
 				(name "VIN"
@@ -461,7 +461,7 @@
 					)
 				)
 			)
-			(pin power_out line
+			(pin passive line
 				(at 2.54 -7.62 270)
 				(length 2.54)
 				(name "GND"
@@ -479,7 +479,7 @@
 					)
 				)
 			)
-			(pin power_out line
+			(pin passive line
 				(at 6.35 -7.62 270)
 				(length 2.54)
 				(name "GND"
