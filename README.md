@@ -1,3 +1,6 @@
-## Lightslop 2: The Grad Pill
+## Overblinking: The LED Matrix Graduation Cap
 
-LED Matrix image/gif slideshow on Pi Pico 2 with the intention of it going on my graduation cap. WORK IN PROGRESS
+A DIY graduation cap project that shows a slideshow of images/gifs/videos on a 64x64 LED matrix.
+Includes a custom 3D-printed mounting system and control PCB.
+
+PROJECT UNDER DEVELOPMENT - check back in a month or so
