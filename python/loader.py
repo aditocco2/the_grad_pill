@@ -1,25 +1,28 @@
 import os
 import math
 import shutil
-from PIL import Image, ImageSequence
 from image_proc import *
 
 # ------------------- User Parameters ---------------------
 
-media_dir = "media2"
+media_dir = "media_slideshow"
 sd_file = "raw/media.bin"
 
 width, height = 64, 64
-switch_interval = 4
-stretch = False
+switch_interval = 10
+stretch = True
 randomize = True
+
+use_static_mode = True
+static_mode_image = "media_static/happy.gif"
 
 # ---------------------------------------------------------
 
 def main():
+    global use_static_mode
 
     media_files = [f"{media_dir}/{f}" for f in os.listdir(media_dir)]
-    file_count = len(media_files)
+    file_count = len(media_files) + (1 if use_static_mode else 0)
 
     data_file = open("temp_data.bin", "wb")
 
@@ -29,6 +32,8 @@ def main():
     # Keep track of how many files were successfully processed
     num_media = 0
 
+    RED = '\033[91m'
+    # Slideshow Mode
     for i, file in enumerate(media_files):
         try:
             media_info, data_array = process_media(file)
@@ -38,10 +43,25 @@ def main():
             print(f"Processed {file} ({i+1}/{file_count})")
 
         except ProcessingFailedError:
-            print(f"Failed to process {file} ({i+1}/{file_count})")
+            print(f"{RED}Failed to process {file} ({i+1}/{file_count})")
         except FileNotSupportedError:
-            print(f"File {file} not supported ({i+1}/{file_count})")
+            print(f"{RED}File {file} not supported ({i+1}/{file_count})")
+    
+    # Static Mode
+    if(use_static_mode):
+        try:
+            media_info, data_array = process_media(static_mode_image)
+            media_info_list.append(media_info)
+            data_file.write(data_array)
+            num_media += 1
+            print(f"Processed {file} for static mode ({file_count}/{file_count})")
 
+        except ProcessingFailedError:
+            print(f"{RED}Failed to process {file} ({file_count}/{file_count}). Disabling static mode")
+            use_static_mode = False
+        except FileNotSupportedError:
+            print(f"{RED}File {file} not supported ({file_count}/{file_count}). Disabling static mode")
+            use_static_mode = False
     
     data_file.close()
     # We are finished writing pixel data at this point. Now for the table of contents
@@ -69,11 +89,12 @@ def make_table_header(table, num_media):
     # Table Header Format:
     # bytes 0 to 3 are the number of pictures/videos
     # bytes 4 to 5 are how many seconds
-    # byte 6 is coming soon
+    # byte 6 is whether to include static mode
     # byte 7 is whether to randomize playback
     table_row = bytearray(16)
     table_row[0:4] = to_little_endian(num_media, 4)
     table_row[4:6] = to_little_endian(int(switch_interval), 2)
+    table_row[6] = 1 if use_static_mode else 0
     table_row[7] = 1 if randomize else 0
     table[0:16] = table_row
 
