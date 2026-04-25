@@ -173,9 +173,15 @@ uint32_t get_new_media_index(uint32_t current_index, uint32_t num_media,
         }
 
         tag = 0;
+
+        initialized = true;
     }
     else{
         tag = (tag + 1) % pool_size;
+
+        if(tag == 0){
+            shuffle_array(media_index_array, pool_size);
+        }
     }
 
     media_index = media_index_array[tag];
