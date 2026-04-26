@@ -154,37 +154,30 @@ void top_level_fsm(){
 uint32_t get_new_media_index(uint32_t current_index, uint32_t num_media, 
                             _Bool use_static_mode, _Bool randomize){
 
-    static uint32_t media_index_array[MAX_MEDIA];
-    static uint32_t pool_size;
-    static uint32_t tag = 0;
-    static _Bool initialized = false;
-
     uint32_t media_index;
 
-    if(!initialized){
-        uint32_t pool_size = num_media; 
-        if(use_static_mode){
-            pool_size--;
-        }
+    uint32_t num_slideshow_media = num_media; 
+    if(use_static_mode){
+        num_slideshow_media--;
+    }
 
-        fill_array(media_index_array, pool_size);
-        if(randomize){
-            shuffle_array(media_index_array, pool_size);
-        }
-
-        tag = 0;
-
-        initialized = true;
+    if(!randomize){
+        media_index = (current_index + 1) % num_slideshow_media;
+    }
+    else if(num_slideshow_media == 1){
+        media_index = 0;
     }
     else{
-        tag = (tag + 1) % pool_size;
-
-        if(tag == 0){
-            shuffle_array(media_index_array, pool_size);
+        // get a new number that's not the previous one
+        uint32_t random_number = (get_rand_32() >> 8 & 0xFFFF) % (num_slideshow_media - 1);
+        if(random_number >= current_index){
+            media_index = random_number + 1;
         }
+        else{
+            media_index = random_number;
+        }   
     }
 
-    media_index = media_index_array[tag];
     return media_index;
 }
 

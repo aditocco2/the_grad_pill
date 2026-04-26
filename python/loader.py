@@ -5,7 +5,7 @@ from image_proc import *
 
 # ------------------- User Parameters ---------------------
 
-media_dir = "media_slideshow"
+media_dir = r"C:\Users\pluh\Downloads\responses_4_25"
 sd_file = "raw/media.bin"
 
 width, height = 64, 64
@@ -33,6 +33,7 @@ def main():
     num_media = 0
 
     RED = '\033[91m'
+    RESET = '\033[0m'
     # Slideshow Mode
     for i, file in enumerate(media_files):
         try:
@@ -43,9 +44,9 @@ def main():
             print(f"Processed {file} ({i+1}/{file_count})")
 
         except ProcessingFailedError:
-            print(f"{RED}Failed to process {file} ({i+1}/{file_count})")
+            print(f"{RED}Failed to process {file} ({i+1}/{file_count}){RESET}")
         except FileNotSupportedError:
-            print(f"{RED}File {file} not supported ({i+1}/{file_count})")
+            print(f"{RED}File {file} not supported ({i+1}/{file_count}){RESET}")
     
     # Static Mode
     if(use_static_mode):
@@ -118,7 +119,7 @@ def make_table_rows(table, table_sectors, media_info_list):
 
 def process_media(file):
 
-    image_types = [".png", ".jpg"]
+    image_types = [".png", ".jpg", ".jpeg"]
     video_types = [".mp4", ".mov", ".avi", ".mkv"]
     
     extension = os.path.splitext(file)[1].lower()
