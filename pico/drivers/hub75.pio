@@ -3,8 +3,8 @@
 
 ; The Data State Machine takes 32-bit pixel data in the form:
 ; 00BGRBGR 00BGRBGR 00BGRBGR 00BGRBGR 
-; This is data for eight pixels on a single bit plane: two in the top half
-; and two in the bottom half.
+; This is data for eight pixels on a single bit plane: four in the top half
+; (LSBs of each byte) and four in the bottom half (MSBs of each byte).
 ; All the data for the least significant bitplane goes in first, then all
 ; the data for the second least significant bitplane, and so on, until
 ; the most significant bitplane, and then it repeats.

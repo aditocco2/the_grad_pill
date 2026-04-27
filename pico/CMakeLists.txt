@@ -2,8 +2,8 @@
 
 # Configure stuff here then compile your program :thumbs_up:
 
-set(main_source_file "main_two.c")    
-set(dependencies "buttons.c" "sd_card.c" 
+set(main_source_file "test_scrolling_text.c")    
+set(dependencies "sd_card.c" 
                  "hub75.c" "hub75_text.c" "hub75.pio") # c/pio files only
 
 set(include_paths "src" "drivers")

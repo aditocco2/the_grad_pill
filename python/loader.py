@@ -58,10 +58,12 @@ def main():
             print(f"Processed {file} for static mode ({file_count}/{file_count})")
 
         except ProcessingFailedError:
-            print(f"{RED}Failed to process {file} ({file_count}/{file_count}). Disabling static mode")
+            print(f"{RED}Failed to process {file} ({file_count}/{file_count}). "
+                  + f"Disabling static mode{RESET}")
             use_static_mode = False
         except FileNotSupportedError:
-            print(f"{RED}File {file} not supported ({file_count}/{file_count}). Disabling static mode")
+            print(f"{RED}File {file} not supported ({file_count}/{file_count}). "
+                  + f"Disabling static mode{RESET}")
             use_static_mode = False
     
     data_file.close()
@@ -85,11 +87,10 @@ def main():
     print("Done!")
     print(f"Your file is ready in {sd_file}")
 
-
 def make_table_header(table, num_media):
     # Table Header Format:
     # bytes 0 to 3 are the number of pictures/videos
-    # bytes 4 to 5 are how many seconds
+    # bytes 4 to 5 are how many seconds between switching
     # byte 6 is whether to include static mode
     # byte 7 is whether to randomize playback
     table_row = bytearray(16)
