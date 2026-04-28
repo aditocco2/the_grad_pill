@@ -35,9 +35,9 @@
      inkscape:pagecheckerboard="0"
      inkscape:deskcolor="#d1d1d1"
      inkscape:document-units="mm"
-     inkscape:zoom="1.4142136"
-     inkscape:cx="385.3732"
-     inkscape:cy="172.88761"
+     inkscape:zoom="0.7071068"
+     inkscape:cx="304.76301"
+     inkscape:cy="392.44425"
      inkscape:window-width="1920"
      inkscape:window-height="1017"
      inkscape:window-x="-8"
@@ -154,7 +154,10 @@
   <g
      inkscape:label="Layer 1"
      inkscape:groupmode="layer"
-     id="layer1">
+     id="layer1" />
+  <g
+     id="g1"
+     transform="translate(12.932707,44.734589)">
     <g
        id="g10">
       <rect
@@ -263,7 +266,7 @@
          r="1.5"
          transform="scale(-1)" />
       <path
-         style="fill:#000000;fill-opacity:0;stroke:#000000;stroke-width:0.273;stroke-dasharray:1.09199595,0.273;stroke-dashoffset:0;stroke-opacity:1"
+         style="fill:#000000;fill-opacity:0;stroke:#000000;stroke-width:0.273;stroke-dasharray:1.092, 0.273;stroke-dashoffset:0;stroke-opacity:1"
          d="M 178,43.995314 H 148.00468 V 11.999999"
          id="path3" />
       <circle
@@ -280,7 +283,7 @@
          style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:16px;font-family:Calibri;-inkscape-font-specification:Calibri;text-align:start;writing-mode:lr-tb;direction:ltr;white-space:pre;shape-inside:url(#rect5);display:inline;vector-effect:non-scaling-stroke;fill:#000000;fill-opacity:1;stroke:#000000;stroke-width:1;stroke-dasharray:none;stroke-opacity:1;-inkscape-stroke:hairline"><tspan
            x="82.732422"
            y="82.589844"
-           id="tspan2">FRONT OF CAP</tspan></text>
+           id="tspan1">FRONT OF CAP</tspan></text>
       <text
          xml:space="preserve"
          transform="matrix(0.26458333,0,0,0.26458333,-5.9531254,-6.1803451)"
@@ -288,15 +291,15 @@
          style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:16px;font-family:Calibri;-inkscape-font-specification:Calibri;text-align:start;writing-mode:lr-tb;direction:ltr;white-space:pre;shape-inside:url(#rect7);display:inline;vector-effect:non-scaling-stroke;fill:#000000;fill-opacity:1;stroke:#000000;stroke-width:1;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:0;-inkscape-stroke:hairline"><tspan
            x="111.5"
            y="586"
-           id="tspan4">Main Mounting Holes (3 mm)
+           id="tspan2">Main Mounting Holes (3 mm)
 </tspan><tspan
            x="111.5"
            y="606"
-           id="tspan5">Backup Holes
+           id="tspan3">Backup Holes
 </tspan><tspan
            x="111.5"
            y="626"
-           id="tspan8">Cutout Sections</tspan></text>
+           id="tspan6">Cutout Sections</tspan></text>
       <circle
          style="fill:#000000;fill-opacity:0;stroke:#000000;stroke-width:0.265;stroke-dasharray:1.06, 0.265;stroke-dashoffset:0;stroke-opacity:1"
          id="path7"
@@ -316,15 +319,15 @@
          y="0"><tspan
            x="169.39755"
            y="495.66664"
-           id="tspan16"><tspan
+           id="tspan8"><tspan
              style="font-weight:normal;-inkscape-font-specification:Calibri;vector-effect:non-scaling-stroke"
-             id="tspan15">Overblinking
+             id="tspan7">Overblinking
 </tspan></tspan><tspan
            x="118.44971"
            y="522.33326"
-           id="tspan19"><tspan
+           id="tspan10"><tspan
              style="font-weight:normal;-inkscape-font-specification:Calibri;vector-effect:non-scaling-stroke"
-             id="tspan17">Hole Mounting Sheet V1</tspan></tspan></text>
+             id="tspan9">Hole Mounting Sheet V1</tspan></tspan></text>
       <text
          xml:space="preserve"
          transform="matrix(0.26458333,0,0,0.26458333,-13.767058,38.282645)"
@@ -334,15 +337,15 @@
          y="0"><tspan
            x="122.04811"
            y="488.66664"
-           id="tspan21"><tspan
+           id="tspan12"><tspan
              style="font-weight:normal;-inkscape-font-specification:Calibri;vector-effect:non-scaling-stroke"
-             id="tspan20">Place this sheet on the top of the cap.
+             id="tspan11">Place this sheet on the top of the cap.
 </tspan></tspan><tspan
            x="158.26872"
            y="505.33326"
-           id="tspan23"><tspan
+           id="tspan14"><tspan
              style="font-weight:normal;-inkscape-font-specification:Calibri;vector-effect:non-scaling-stroke"
-             id="tspan22">This side should face up.</tspan></tspan></text>
+             id="tspan13">This side should face up.</tspan></tspan></text>
       <path
          style="fill:#000000;fill-opacity:0;stroke:#000000;stroke-width:0.264583;stroke-dasharray:1.05833, 0.264583;stroke-dashoffset:0;stroke-opacity:1"
          d="M 178,43.000001 V 15 a 3,3 45 0 0 -3,-3 h -26"
@@ -374,11 +377,11 @@
          d="M 88.679161,17 V 63.999998"
          id="path26" />
       <path
-         style="fill:#000000;fill-opacity:1;stroke:#000000;stroke-width:0.26458333;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:1;vector-effect:non-scaling-stroke;-inkscape-stroke:hairline"
+         style="vector-effect:non-scaling-stroke;fill:#000000;fill-opacity:1;stroke:#000000;stroke-width:0.264583;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:1;-inkscape-stroke:hairline"
          d="m 172.7084,167.7084 v -9.52493"
          id="path28" />
       <path
-         style="fill:#000000;fill-opacity:1;stroke:#000000;stroke-width:0.26458333;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:1;vector-effect:non-scaling-stroke;-inkscape-stroke:hairline"
+         style="vector-effect:non-scaling-stroke;fill:#000000;fill-opacity:1;stroke:#000000;stroke-width:0.264583;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:1;-inkscape-stroke:hairline"
          d="m 162.75517,167.7084 -0.0348,-9.52493"
          id="path29" />
       <path
@@ -386,214 +389,214 @@
          d="m 162.72037,159.24181 h 9.98803"
          id="path30" />
     </g>
-  </g>
-  <path
-     style="vector-effect:non-scaling-stroke;fill:#000000;fill-opacity:0;stroke:#000000;stroke-width:0.264583;stroke-dasharray:none;stroke-dashoffset:0;-inkscape-stroke:hairline"
-     d="M 6.0000009,8.2041672 H 0"
-     id="path17" />
-  <path
-     style="vector-effect:non-scaling-stroke;fill:#000000;fill-opacity:0;stroke:#000000;stroke-width:0.264583;stroke-dasharray:none;stroke-dashoffset:0;-inkscape-stroke:hairline"
-     d="M 6.0000009,2.7374992 H 42"
-     id="path18" />
-  <text
-     xml:space="preserve"
-     style="font-style:normal;font-variant:normal;font-weight:300;font-stretch:normal;font-size:3.52777px;font-family:Calibri;-inkscape-font-specification:'Calibri Light';text-align:center;writing-mode:lr-tb;direction:ltr;text-anchor:middle;vector-effect:non-scaling-stroke;fill:#000000;fill-opacity:1;stroke:#000000;stroke-width:0.264583;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:0;-inkscape-stroke:hairline"
-     x="5.2384825"
-     y="11.538954"
-     id="text18"><tspan
-       sodipodi:role="line"
-       id="tspan18"
-       style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:3.52777px;font-family:Sans;-inkscape-font-specification:'Sans, Normal';font-variant-ligatures:normal;font-variant-caps:normal;font-variant-numeric:normal;font-variant-east-asian:normal;vector-effect:non-scaling-stroke;fill:#000000;fill-opacity:1;stroke:#000000;stroke-width:0.264583;stroke-dasharray:none;stroke-opacity:0;-inkscape-stroke:hairline"
+    <path
+       style="vector-effect:non-scaling-stroke;fill:#000000;fill-opacity:0;stroke:#000000;stroke-width:0.264583;stroke-dasharray:none;stroke-dashoffset:0;-inkscape-stroke:hairline"
+       d="M 6.0000009,8.2041672 H 0"
+       id="path17" />
+    <path
+       style="vector-effect:non-scaling-stroke;fill:#000000;fill-opacity:0;stroke:#000000;stroke-width:0.264583;stroke-dasharray:none;stroke-dashoffset:0;-inkscape-stroke:hairline"
+       d="M 6.0000009,2.7374992 H 42"
+       id="path18" />
+    <text
+       xml:space="preserve"
+       style="font-style:normal;font-variant:normal;font-weight:300;font-stretch:normal;font-size:3.52777px;font-family:Calibri;-inkscape-font-specification:'Calibri Light';text-align:center;writing-mode:lr-tb;direction:ltr;text-anchor:middle;vector-effect:non-scaling-stroke;fill:#000000;fill-opacity:1;stroke:#000000;stroke-width:0.264583;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:0;-inkscape-stroke:hairline"
        x="5.2384825"
-       y="11.538954">6 mm</tspan></text>
-  <path
-     style="vector-effect:non-scaling-stroke;fill:#000000;fill-opacity:0;stroke:#000000;stroke-width:0.264583;stroke-dasharray:none;stroke-dashoffset:0;-inkscape-stroke:hairline"
-     d="M 48.79167,6 V -1e-6"
-     id="path17-7" />
-  <text
-     xml:space="preserve"
-     style="font-style:normal;font-variant:normal;font-weight:300;font-stretch:normal;font-size:3.52777px;font-family:Calibri;-inkscape-font-specification:'Calibri Light';text-align:center;writing-mode:lr-tb;direction:ltr;text-anchor:middle;vector-effect:non-scaling-stroke;fill:#000000;fill-opacity:1;stroke:#000000;stroke-width:0.264583;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:0;-inkscape-stroke:hairline"
-     x="5.238482"
-     y="-50.74855"
-     id="text18-7"
-     transform="rotate(90)"><tspan
-       sodipodi:role="line"
-       id="tspan18-9"
-       style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:3.52777px;font-family:Sans;-inkscape-font-specification:'Sans, Normal';font-variant-ligatures:normal;font-variant-caps:normal;font-variant-numeric:normal;font-variant-east-asian:normal;vector-effect:non-scaling-stroke;fill:#000000;fill-opacity:1;stroke:#000000;stroke-width:0.264583;stroke-dasharray:none;stroke-opacity:0;-inkscape-stroke:hairline"
+       y="11.538954"
+       id="text18"><tspan
+         sodipodi:role="line"
+         id="tspan18"
+         style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:3.52777px;font-family:Sans;-inkscape-font-specification:'Sans, Normal';font-variant-ligatures:normal;font-variant-caps:normal;font-variant-numeric:normal;font-variant-east-asian:normal;vector-effect:non-scaling-stroke;fill:#000000;fill-opacity:1;stroke:#000000;stroke-width:0.264583;stroke-dasharray:none;stroke-opacity:0;-inkscape-stroke:hairline"
+         x="5.2384825"
+         y="11.538954">6 mm</tspan></text>
+    <path
+       style="vector-effect:non-scaling-stroke;fill:#000000;fill-opacity:0;stroke:#000000;stroke-width:0.264583;stroke-dasharray:none;stroke-dashoffset:0;-inkscape-stroke:hairline"
+       d="M 48.79167,6 V -1e-6"
+       id="path17-7" />
+    <text
+       xml:space="preserve"
+       style="font-style:normal;font-variant:normal;font-weight:300;font-stretch:normal;font-size:3.52777px;font-family:Calibri;-inkscape-font-specification:'Calibri Light';text-align:center;writing-mode:lr-tb;direction:ltr;text-anchor:middle;vector-effect:non-scaling-stroke;fill:#000000;fill-opacity:1;stroke:#000000;stroke-width:0.264583;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:0;-inkscape-stroke:hairline"
        x="5.238482"
-       y="-50.74855">6 mm</tspan></text>
-  <text
-     xml:space="preserve"
-     style="font-style:normal;font-variant:normal;font-weight:300;font-stretch:normal;font-size:3.52777px;font-family:Calibri;-inkscape-font-specification:'Calibri Light';text-align:center;writing-mode:lr-tb;direction:ltr;text-anchor:middle;vector-effect:non-scaling-stroke;fill:#000000;fill-opacity:1;stroke:#000000;stroke-width:0.264583;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:0;-inkscape-stroke:hairline"
-     x="24.509504"
-     y="6.2170506"
-     id="text18-6"><tspan
-       sodipodi:role="line"
-       id="tspan18-8"
-       style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:3.52777px;font-family:Sans;-inkscape-font-specification:'Sans, Normal';font-variant-ligatures:normal;font-variant-caps:normal;font-variant-numeric:normal;font-variant-east-asian:normal;vector-effect:non-scaling-stroke;fill:#000000;fill-opacity:1;stroke:#000000;stroke-width:0.264583;stroke-dasharray:none;stroke-opacity:0;-inkscape-stroke:hairline"
+       y="-50.74855"
+       id="text18-7"
+       transform="rotate(90)"><tspan
+         sodipodi:role="line"
+         id="tspan18-9"
+         style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:3.52777px;font-family:Sans;-inkscape-font-specification:'Sans, Normal';font-variant-ligatures:normal;font-variant-caps:normal;font-variant-numeric:normal;font-variant-east-asian:normal;vector-effect:non-scaling-stroke;fill:#000000;fill-opacity:1;stroke:#000000;stroke-width:0.264583;stroke-dasharray:none;stroke-opacity:0;-inkscape-stroke:hairline"
+         x="5.238482"
+         y="-50.74855">6 mm</tspan></text>
+    <text
+       xml:space="preserve"
+       style="font-style:normal;font-variant:normal;font-weight:300;font-stretch:normal;font-size:3.52777px;font-family:Calibri;-inkscape-font-specification:'Calibri Light';text-align:center;writing-mode:lr-tb;direction:ltr;text-anchor:middle;vector-effect:non-scaling-stroke;fill:#000000;fill-opacity:1;stroke:#000000;stroke-width:0.264583;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:0;-inkscape-stroke:hairline"
        x="24.509504"
-       y="6.2170506">36 mm</tspan></text>
-  <text
-     xml:space="preserve"
-     style="font-style:normal;font-variant:normal;font-weight:300;font-stretch:normal;font-size:3.52777px;font-family:Calibri;-inkscape-font-specification:'Calibri Light';text-align:center;writing-mode:lr-tb;direction:ltr;text-anchor:middle;vector-effect:non-scaling-stroke;fill:#000000;fill-opacity:1;stroke:#000000;stroke-width:0.264583;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:0;-inkscape-stroke:hairline"
-     x="134.5"
-     y="74.790237"
-     id="text18-6-1"><tspan
-       sodipodi:role="line"
-       id="tspan18-8-8"
-       style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:3.52777px;font-family:Sans;-inkscape-font-specification:'Sans, Normal';font-variant-ligatures:normal;font-variant-caps:normal;font-variant-numeric:normal;font-variant-east-asian:normal;vector-effect:non-scaling-stroke;fill:#000000;fill-opacity:1;stroke:#000000;stroke-width:0.264583;stroke-dasharray:none;stroke-opacity:0;-inkscape-stroke:hairline"
+       y="6.2170506"
+       id="text18-6"><tspan
+         sodipodi:role="line"
+         id="tspan18-8"
+         style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:3.52777px;font-family:Sans;-inkscape-font-specification:'Sans, Normal';font-variant-ligatures:normal;font-variant-caps:normal;font-variant-numeric:normal;font-variant-east-asian:normal;vector-effect:non-scaling-stroke;fill:#000000;fill-opacity:1;stroke:#000000;stroke-width:0.264583;stroke-dasharray:none;stroke-opacity:0;-inkscape-stroke:hairline"
+         x="24.509504"
+         y="6.2170506">36 mm</tspan></text>
+    <text
+       xml:space="preserve"
+       style="font-style:normal;font-variant:normal;font-weight:300;font-stretch:normal;font-size:3.52777px;font-family:Calibri;-inkscape-font-specification:'Calibri Light';text-align:center;writing-mode:lr-tb;direction:ltr;text-anchor:middle;vector-effect:non-scaling-stroke;fill:#000000;fill-opacity:1;stroke:#000000;stroke-width:0.264583;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:0;-inkscape-stroke:hairline"
        x="134.5"
-       y="74.790237">77 mm</tspan></text>
-  <text
-     xml:space="preserve"
-     style="font-style:normal;font-variant:normal;font-weight:300;font-stretch:normal;font-size:3.52777px;font-family:Calibri;-inkscape-font-specification:'Calibri Light';text-align:center;writing-mode:lr-tb;direction:ltr;text-anchor:middle;vector-effect:non-scaling-stroke;fill:#000000;fill-opacity:1;stroke:#000000;stroke-width:0.264583;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:0;-inkscape-stroke:hairline"
-     x="-40.5"
-     y="87.620827"
-     id="text18-6-1-2"
-     transform="rotate(-90)"><tspan
-       sodipodi:role="line"
-       id="tspan18-8-8-3"
-       style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:3.52777px;font-family:Sans;-inkscape-font-specification:'Sans, Normal';font-variant-ligatures:normal;font-variant-caps:normal;font-variant-numeric:normal;font-variant-east-asian:normal;vector-effect:non-scaling-stroke;fill:#000000;fill-opacity:1;stroke:#000000;stroke-width:0.264583;stroke-dasharray:none;stroke-opacity:0;-inkscape-stroke:hairline"
+       y="74.790237"
+       id="text18-6-1"><tspan
+         sodipodi:role="line"
+         id="tspan18-8-8"
+         style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:3.52777px;font-family:Sans;-inkscape-font-specification:'Sans, Normal';font-variant-ligatures:normal;font-variant-caps:normal;font-variant-numeric:normal;font-variant-east-asian:normal;vector-effect:non-scaling-stroke;fill:#000000;fill-opacity:1;stroke:#000000;stroke-width:0.264583;stroke-dasharray:none;stroke-opacity:0;-inkscape-stroke:hairline"
+         x="134.5"
+         y="74.790237">77 mm</tspan></text>
+    <text
+       xml:space="preserve"
+       style="font-style:normal;font-variant:normal;font-weight:300;font-stretch:normal;font-size:3.52777px;font-family:Calibri;-inkscape-font-specification:'Calibri Light';text-align:center;writing-mode:lr-tb;direction:ltr;text-anchor:middle;vector-effect:non-scaling-stroke;fill:#000000;fill-opacity:1;stroke:#000000;stroke-width:0.264583;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:0;-inkscape-stroke:hairline"
        x="-40.5"
-       y="87.620827">47 mm</tspan></text>
-  <text
-     xml:space="preserve"
-     style="font-style:normal;font-variant:normal;font-weight:300;font-stretch:normal;font-size:3.52777px;font-family:Calibri;-inkscape-font-specification:'Calibri Light';text-align:center;writing-mode:lr-tb;direction:ltr;text-anchor:middle;vector-effect:non-scaling-stroke;fill:#000000;fill-opacity:1;stroke:#000000;stroke-width:0.264583;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:0;-inkscape-stroke:hairline"
-     x="172.64714"
-     y="59.091759"
-     id="text18-6-1-9"><tspan
-       sodipodi:role="line"
-       id="tspan18-8-8-5"
-       style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:3.52777px;font-family:Sans;-inkscape-font-specification:'Sans, Normal';font-variant-ligatures:normal;font-variant-caps:normal;font-variant-numeric:normal;font-variant-east-asian:normal;vector-effect:non-scaling-stroke;fill:#000000;fill-opacity:1;stroke:#000000;stroke-width:0.264583;stroke-dasharray:none;stroke-opacity:0;-inkscape-stroke:hairline"
+       y="87.620827"
+       id="text18-6-1-2"
+       transform="rotate(-90)"><tspan
+         sodipodi:role="line"
+         id="tspan18-8-8-3"
+         style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:3.52777px;font-family:Sans;-inkscape-font-specification:'Sans, Normal';font-variant-ligatures:normal;font-variant-caps:normal;font-variant-numeric:normal;font-variant-east-asian:normal;vector-effect:non-scaling-stroke;fill:#000000;fill-opacity:1;stroke:#000000;stroke-width:0.264583;stroke-dasharray:none;stroke-opacity:0;-inkscape-stroke:hairline"
+         x="-40.5"
+         y="87.620827">47 mm</tspan></text>
+    <text
+       xml:space="preserve"
+       style="font-style:normal;font-variant:normal;font-weight:300;font-stretch:normal;font-size:3.52777px;font-family:Calibri;-inkscape-font-specification:'Calibri Light';text-align:center;writing-mode:lr-tb;direction:ltr;text-anchor:middle;vector-effect:non-scaling-stroke;fill:#000000;fill-opacity:1;stroke:#000000;stroke-width:0.264583;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:0;-inkscape-stroke:hairline"
        x="172.64714"
-       y="59.091759">5 mm</tspan></text>
-  <text
-     xml:space="preserve"
-     style="font-style:normal;font-variant:normal;font-weight:300;font-stretch:normal;font-size:3.52777px;font-family:Calibri;-inkscape-font-specification:'Calibri Light';text-align:center;writing-mode:lr-tb;direction:ltr;text-anchor:middle;vector-effect:non-scaling-stroke;fill:#000000;fill-opacity:1;stroke:#000000;stroke-width:0.264583;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:0;-inkscape-stroke:hairline"
-     x="183.91301"
-     y="82.390869"
-     id="text18-6-1-9-8"><tspan
-       sodipodi:role="line"
-       id="tspan18-8-8-5-6"
-       style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:3.52777px;font-family:Sans;-inkscape-font-specification:'Sans, Normal';font-variant-ligatures:normal;font-variant-caps:normal;font-variant-numeric:normal;font-variant-east-asian:normal;vector-effect:non-scaling-stroke;fill:#000000;fill-opacity:1;stroke:#000000;stroke-width:0.264583;stroke-dasharray:none;stroke-opacity:0;-inkscape-stroke:hairline"
+       y="59.091759"
+       id="text18-6-1-9"><tspan
+         sodipodi:role="line"
+         id="tspan18-8-8-5"
+         style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:3.52777px;font-family:Sans;-inkscape-font-specification:'Sans, Normal';font-variant-ligatures:normal;font-variant-caps:normal;font-variant-numeric:normal;font-variant-east-asian:normal;vector-effect:non-scaling-stroke;fill:#000000;fill-opacity:1;stroke:#000000;stroke-width:0.264583;stroke-dasharray:none;stroke-opacity:0;-inkscape-stroke:hairline"
+         x="172.64714"
+         y="59.091759">5 mm</tspan></text>
+    <text
+       xml:space="preserve"
+       style="font-style:normal;font-variant:normal;font-weight:300;font-stretch:normal;font-size:3.52777px;font-family:Calibri;-inkscape-font-specification:'Calibri Light';text-align:center;writing-mode:lr-tb;direction:ltr;text-anchor:middle;vector-effect:non-scaling-stroke;fill:#000000;fill-opacity:1;stroke:#000000;stroke-width:0.264583;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:0;-inkscape-stroke:hairline"
        x="183.91301"
-       y="82.390869">10 mm</tspan></text>
-  <text
-     xml:space="preserve"
-     style="font-style:normal;font-variant:normal;font-weight:300;font-stretch:normal;font-size:3.52777px;font-family:Calibri;-inkscape-font-specification:'Calibri Light';text-align:center;writing-mode:lr-tb;direction:ltr;text-anchor:middle;vector-effect:non-scaling-stroke;fill:#000000;fill-opacity:1;stroke:#000000;stroke-width:0.264583;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:0;-inkscape-stroke:hairline"
-     x="167.6274"
-     y="157.15021"
-     id="text18-6-1-9-8-9"><tspan
-       sodipodi:role="line"
-       id="tspan18-8-8-5-6-3"
-       style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:3.52777px;font-family:Sans;-inkscape-font-specification:'Sans, Normal';font-variant-ligatures:normal;font-variant-caps:normal;font-variant-numeric:normal;font-variant-east-asian:normal;vector-effect:non-scaling-stroke;fill:#000000;fill-opacity:1;stroke:#000000;stroke-width:0.264583;stroke-dasharray:none;stroke-opacity:0;-inkscape-stroke:hairline"
+       y="82.390869"
+       id="text18-6-1-9-8"><tspan
+         sodipodi:role="line"
+         id="tspan18-8-8-5-6"
+         style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:3.52777px;font-family:Sans;-inkscape-font-specification:'Sans, Normal';font-variant-ligatures:normal;font-variant-caps:normal;font-variant-numeric:normal;font-variant-east-asian:normal;vector-effect:non-scaling-stroke;fill:#000000;fill-opacity:1;stroke:#000000;stroke-width:0.264583;stroke-dasharray:none;stroke-opacity:0;-inkscape-stroke:hairline"
+         x="183.91301"
+         y="82.390869">10 mm</tspan></text>
+    <text
+       xml:space="preserve"
+       style="font-style:normal;font-variant:normal;font-weight:300;font-stretch:normal;font-size:3.52777px;font-family:Calibri;-inkscape-font-specification:'Calibri Light';text-align:center;writing-mode:lr-tb;direction:ltr;text-anchor:middle;vector-effect:non-scaling-stroke;fill:#000000;fill-opacity:1;stroke:#000000;stroke-width:0.264583;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:0;-inkscape-stroke:hairline"
        x="167.6274"
-       y="157.15021">10 mm</tspan></text>
-  <path
-     style="vector-effect:non-scaling-stroke;fill:#000000;fill-opacity:1;stroke:#000000;stroke-width:0.264583;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:0;-inkscape-stroke:hairline"
-     d="m 173,62.499999 h 5.13237"
-     id="path20" />
-  <path
-     style="vector-effect:non-scaling-stroke;fill:#000000;fill-opacity:1;stroke:#000000;stroke-width:0.264583;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:1;-inkscape-stroke:hairline"
-     d="m 96,70.7319 h 77"
-     id="path24" />
-  <path
-     style="vector-effect:non-scaling-stroke;fill:#000000;fill-opacity:1;stroke:#000000;stroke-width:0.264583;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:1;-inkscape-stroke:hairline"
-     d="m 173,61.266664 h 5.13237"
-     id="path25" />
-  <text
-     xml:space="preserve"
-     style="font-style:normal;font-variant:normal;font-weight:300;font-stretch:normal;font-size:3.52777px;font-family:Calibri;-inkscape-font-specification:'Calibri Light';text-align:center;writing-mode:lr-tb;direction:ltr;text-anchor:middle;vector-effect:non-scaling-stroke;fill:#000000;fill-opacity:1;stroke:#000000;stroke-width:0.264583;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:0;-inkscape-stroke:hairline"
-     x="18.230711"
-     y="-103.9099"
-     id="text18-6-1-9-1"
-     transform="rotate(90)"><tspan
-       sodipodi:role="line"
-       id="tspan18-8-8-5-3"
-       style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:3.52777px;font-family:Sans;-inkscape-font-specification:'Sans, Normal';font-variant-ligatures:normal;font-variant-caps:normal;font-variant-numeric:normal;font-variant-east-asian:normal;vector-effect:non-scaling-stroke;fill:#000000;fill-opacity:1;stroke:#000000;stroke-width:0.264583;stroke-dasharray:none;stroke-opacity:0;-inkscape-stroke:hairline"
+       y="157.15021"
+       id="text18-6-1-9-8-9"><tspan
+         sodipodi:role="line"
+         id="tspan18-8-8-5-6-3"
+         style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:3.52777px;font-family:Sans;-inkscape-font-specification:'Sans, Normal';font-variant-ligatures:normal;font-variant-caps:normal;font-variant-numeric:normal;font-variant-east-asian:normal;vector-effect:non-scaling-stroke;fill:#000000;fill-opacity:1;stroke:#000000;stroke-width:0.264583;stroke-dasharray:none;stroke-opacity:0;-inkscape-stroke:hairline"
+         x="167.6274"
+         y="157.15021">10 mm</tspan></text>
+    <path
+       style="vector-effect:non-scaling-stroke;fill:#000000;fill-opacity:1;stroke:#000000;stroke-width:0.264583;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:0;-inkscape-stroke:hairline"
+       d="m 173,62.499999 h 5.13237"
+       id="path20" />
+    <path
+       style="vector-effect:non-scaling-stroke;fill:#000000;fill-opacity:1;stroke:#000000;stroke-width:0.264583;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:1;-inkscape-stroke:hairline"
+       d="m 96,70.7319 h 77"
+       id="path24" />
+    <path
+       style="vector-effect:non-scaling-stroke;fill:#000000;fill-opacity:1;stroke:#000000;stroke-width:0.264583;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:1;-inkscape-stroke:hairline"
+       d="m 173,61.266664 h 5.13237"
+       id="path25" />
+    <text
+       xml:space="preserve"
+       style="font-style:normal;font-variant:normal;font-weight:300;font-stretch:normal;font-size:3.52777px;font-family:Calibri;-inkscape-font-specification:'Calibri Light';text-align:center;writing-mode:lr-tb;direction:ltr;text-anchor:middle;vector-effect:non-scaling-stroke;fill:#000000;fill-opacity:1;stroke:#000000;stroke-width:0.264583;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:0;-inkscape-stroke:hairline"
        x="18.230711"
-       y="-103.9099">5 mm</tspan></text>
-  <path
-     style="vector-effect:non-scaling-stroke;fill:#000000;fill-opacity:1;stroke:#000000;stroke-width:0.262061;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:1;-inkscape-stroke:hairline"
-     d="M 101.73335,11.965024 V 17"
-     id="path25-8" />
-  <path
-     style="vector-effect:non-scaling-stroke;fill:#000000;fill-opacity:1;stroke:#000000;stroke-width:0.264583;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:1;-inkscape-stroke:hairline"
-     d="M 190,78.184374 H 178"
-     id="path27" />
-  <text
-     xml:space="preserve"
-     style="font-style:normal;font-variant:normal;font-weight:300;font-stretch:normal;font-size:3.52777px;font-family:Calibri;-inkscape-font-specification:'Calibri Light';text-align:center;writing-mode:lr-tb;direction:ltr;text-anchor:middle;vector-effect:non-scaling-stroke;fill:#000000;fill-opacity:1;stroke:#000000;stroke-width:0.264583;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:0;-inkscape-stroke:hairline"
-     x="5.8784223"
-     y="-128.31221"
-     id="text18-6-1-9-8-8"
-     transform="rotate(90)"><tspan
-       sodipodi:role="line"
-       id="tspan18-8-8-5-6-6"
-       style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:3.52777px;font-family:Sans;-inkscape-font-specification:'Sans, Normal';font-variant-ligatures:normal;font-variant-caps:normal;font-variant-numeric:normal;font-variant-east-asian:normal;vector-effect:non-scaling-stroke;fill:#000000;fill-opacity:1;stroke:#000000;stroke-width:0.264583;stroke-dasharray:none;stroke-opacity:0;-inkscape-stroke:hairline"
+       y="-103.9099"
+       id="text18-6-1-9-1"
+       transform="rotate(90)"><tspan
+         sodipodi:role="line"
+         id="tspan18-8-8-5-3"
+         style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:3.52777px;font-family:Sans;-inkscape-font-specification:'Sans, Normal';font-variant-ligatures:normal;font-variant-caps:normal;font-variant-numeric:normal;font-variant-east-asian:normal;vector-effect:non-scaling-stroke;fill:#000000;fill-opacity:1;stroke:#000000;stroke-width:0.264583;stroke-dasharray:none;stroke-opacity:0;-inkscape-stroke:hairline"
+         x="18.230711"
+         y="-103.9099">5 mm</tspan></text>
+    <path
+       style="vector-effect:non-scaling-stroke;fill:#000000;fill-opacity:1;stroke:#000000;stroke-width:0.262061;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:1;-inkscape-stroke:hairline"
+       d="M 101.73335,11.965024 V 17"
+       id="path25-8" />
+    <path
+       style="vector-effect:non-scaling-stroke;fill:#000000;fill-opacity:1;stroke:#000000;stroke-width:0.264583;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:1;-inkscape-stroke:hairline"
+       d="M 190,78.184374 H 178"
+       id="path27" />
+    <text
+       xml:space="preserve"
+       style="font-style:normal;font-variant:normal;font-weight:300;font-stretch:normal;font-size:3.52777px;font-family:Calibri;-inkscape-font-specification:'Calibri Light';text-align:center;writing-mode:lr-tb;direction:ltr;text-anchor:middle;vector-effect:non-scaling-stroke;fill:#000000;fill-opacity:1;stroke:#000000;stroke-width:0.264583;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:0;-inkscape-stroke:hairline"
        x="5.8784223"
-       y="-128.31221">10 mm</tspan></text>
-  <text
-     xml:space="preserve"
-     style="font-style:normal;font-variant:normal;font-weight:300;font-stretch:normal;font-size:3.52777px;font-family:Calibri;-inkscape-font-specification:'Calibri Light';text-align:center;writing-mode:lr-tb;direction:ltr;text-anchor:middle;vector-effect:non-scaling-stroke;fill:#000000;fill-opacity:1;stroke:#000000;stroke-width:0.264583;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:0;-inkscape-stroke:hairline"
-     x="162.84702"
-     y="47.731266"
-     id="text18-6-1-9-8-8-6"><tspan
-       sodipodi:role="line"
-       id="tspan18-8-8-5-6-6-5"
-       style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:3.52777px;font-family:Sans;-inkscape-font-specification:'Sans, Normal';font-variant-ligatures:normal;font-variant-caps:normal;font-variant-numeric:normal;font-variant-east-asian:normal;vector-effect:non-scaling-stroke;fill:#000000;fill-opacity:1;stroke:#000000;stroke-width:0.264583;stroke-dasharray:none;stroke-opacity:0;-inkscape-stroke:hairline"
+       y="-128.31221"
+       id="text18-6-1-9-8-8"
+       transform="rotate(90)"><tspan
+         sodipodi:role="line"
+         id="tspan18-8-8-5-6-6"
+         style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:3.52777px;font-family:Sans;-inkscape-font-specification:'Sans, Normal';font-variant-ligatures:normal;font-variant-caps:normal;font-variant-numeric:normal;font-variant-east-asian:normal;vector-effect:non-scaling-stroke;fill:#000000;fill-opacity:1;stroke:#000000;stroke-width:0.264583;stroke-dasharray:none;stroke-opacity:0;-inkscape-stroke:hairline"
+         x="5.8784223"
+         y="-128.31221">10 mm</tspan></text>
+    <text
+       xml:space="preserve"
+       style="font-style:normal;font-variant:normal;font-weight:300;font-stretch:normal;font-size:3.52777px;font-family:Calibri;-inkscape-font-specification:'Calibri Light';text-align:center;writing-mode:lr-tb;direction:ltr;text-anchor:middle;vector-effect:non-scaling-stroke;fill:#000000;fill-opacity:1;stroke:#000000;stroke-width:0.264583;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:0;-inkscape-stroke:hairline"
        x="162.84702"
-       y="47.731266">30 mm</tspan></text>
-  <text
-     xml:space="preserve"
-     style="font-style:normal;font-variant:normal;font-weight:300;font-stretch:normal;font-size:3.52777px;font-family:Calibri;-inkscape-font-specification:'Calibri Light';text-align:center;writing-mode:lr-tb;direction:ltr;text-anchor:middle;vector-effect:non-scaling-stroke;fill:#000000;fill-opacity:1;stroke:#000000;stroke-width:0.264583;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:0;-inkscape-stroke:hairline"
-     x="27.979012"
-     y="-144.31746"
-     id="text18-6-1-9-8-8-0"
-     transform="rotate(90)"><tspan
-       sodipodi:role="line"
-       id="tspan18-8-8-5-6-6-6"
-       style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:3.52777px;font-family:Sans;-inkscape-font-specification:'Sans, Normal';font-variant-ligatures:normal;font-variant-caps:normal;font-variant-numeric:normal;font-variant-east-asian:normal;vector-effect:non-scaling-stroke;fill:#000000;fill-opacity:1;stroke:#000000;stroke-width:0.264583;stroke-dasharray:none;stroke-opacity:0;-inkscape-stroke:hairline"
+       y="47.731266"
+       id="text18-6-1-9-8-8-6"><tspan
+         sodipodi:role="line"
+         id="tspan18-8-8-5-6-6-5"
+         style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:3.52777px;font-family:Sans;-inkscape-font-specification:'Sans, Normal';font-variant-ligatures:normal;font-variant-caps:normal;font-variant-numeric:normal;font-variant-east-asian:normal;vector-effect:non-scaling-stroke;fill:#000000;fill-opacity:1;stroke:#000000;stroke-width:0.264583;stroke-dasharray:none;stroke-opacity:0;-inkscape-stroke:hairline"
+         x="162.84702"
+         y="47.731266">30 mm</tspan></text>
+    <text
+       xml:space="preserve"
+       style="font-style:normal;font-variant:normal;font-weight:300;font-stretch:normal;font-size:3.52777px;font-family:Calibri;-inkscape-font-specification:'Calibri Light';text-align:center;writing-mode:lr-tb;direction:ltr;text-anchor:middle;vector-effect:non-scaling-stroke;fill:#000000;fill-opacity:1;stroke:#000000;stroke-width:0.264583;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:0;-inkscape-stroke:hairline"
        x="27.979012"
-       y="-144.31746">32 mm</tspan></text>
-  <path
-     style="vector-effect:non-scaling-stroke;fill:#000000;fill-opacity:1;stroke:#000000;stroke-width:0.264583;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:1;-inkscape-stroke:hairline"
-     d="M 132.5187,11.965418 V -0.03458152"
-     id="path27-0" />
-  <path
-     style="vector-effect:non-scaling-stroke;fill:#000000;fill-opacity:1;stroke:#000000;stroke-width:0.264583;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:1;-inkscape-stroke:hairline"
-     d="M 6.0000009,8.9296874 V 5.9999998 1.7528646"
-     id="path31" />
-  <path
-     style="vector-effect:non-scaling-stroke;fill:#000000;fill-opacity:0;stroke:#000000;stroke-width:0.248688;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:1;-inkscape-stroke:hairline"
-     d="M 94.5,63.999998 H 86.814127"
-     id="path33" />
-  <path
-     style="vector-effect:non-scaling-stroke;fill:#000000;fill-opacity:0;stroke:#000000;stroke-width:0.352729;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:1;-inkscape-stroke:hairline"
-     d="M 102.98038,17 H 87.019616"
-     id="path34" />
-  <path
-     style="vector-effect:non-scaling-stroke;fill:#000000;fill-opacity:0;stroke:#000000;stroke-width:0.23779;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:1;-inkscape-stroke:hairline"
-     d="m 96,65.5 v 6.301301"
-     id="path35" />
-  <path
-     style="vector-effect:non-scaling-stroke;fill:#000000;fill-opacity:0;stroke:#000000;stroke-width:0.339231;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:1;-inkscape-stroke:hairline"
-     d="M 173,59.223746 V 71.776254"
-     id="path36" />
-  <path
-     style="vector-effect:non-scaling-stroke;fill:#000000;fill-opacity:0;stroke:#000000;stroke-width:0.264583;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:1;-inkscape-stroke:hairline"
-     d="m 167.70887,167.70779 -11.2092,5.3e-4"
-     id="path37" />
-  <path
-     style="vector-effect:non-scaling-stroke;fill:#000000;fill-opacity:0;stroke:#000000;stroke-width:0.264583;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:1;-inkscape-stroke:hairline"
-     d="M 157.66897,167.70779 157.52866,178"
-     id="path38" />
-  <path
-     style="vector-effect:non-scaling-stroke;fill:#000000;fill-opacity:0;stroke:#000000;stroke-width:0.264583;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:1;-inkscape-stroke:hairline"
-     d="M 42,4.4999999 V 1.9176588"
-     id="path39" />
-  <path
-     style="vector-effect:non-scaling-stroke;fill:#000000;fill-opacity:0;stroke:#000000;stroke-width:0.264583;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:1;-inkscape-stroke:hairline"
-     d="m 43.5,5.9999998 h 6.405901"
-     id="path40" />
+       y="-144.31746"
+       id="text18-6-1-9-8-8-0"
+       transform="rotate(90)"><tspan
+         sodipodi:role="line"
+         id="tspan18-8-8-5-6-6-6"
+         style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:3.52777px;font-family:Sans;-inkscape-font-specification:'Sans, Normal';font-variant-ligatures:normal;font-variant-caps:normal;font-variant-numeric:normal;font-variant-east-asian:normal;vector-effect:non-scaling-stroke;fill:#000000;fill-opacity:1;stroke:#000000;stroke-width:0.264583;stroke-dasharray:none;stroke-opacity:0;-inkscape-stroke:hairline"
+         x="27.979012"
+         y="-144.31746">32 mm</tspan></text>
+    <path
+       style="vector-effect:non-scaling-stroke;fill:#000000;fill-opacity:1;stroke:#000000;stroke-width:0.264583;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:1;-inkscape-stroke:hairline"
+       d="M 132.5187,11.965418 V -0.03458152"
+       id="path27-0" />
+    <path
+       style="vector-effect:non-scaling-stroke;fill:#000000;fill-opacity:1;stroke:#000000;stroke-width:0.264583;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:1;-inkscape-stroke:hairline"
+       d="M 6.0000009,8.9296874 V 5.9999998 1.7528646"
+       id="path31" />
+    <path
+       style="vector-effect:non-scaling-stroke;fill:#000000;fill-opacity:0;stroke:#000000;stroke-width:0.248688;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:1;-inkscape-stroke:hairline"
+       d="M 94.5,63.999998 H 86.814127"
+       id="path33" />
+    <path
+       style="vector-effect:non-scaling-stroke;fill:#000000;fill-opacity:0;stroke:#000000;stroke-width:0.352729;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:1;-inkscape-stroke:hairline"
+       d="M 102.98038,17 H 87.019616"
+       id="path34" />
+    <path
+       style="vector-effect:non-scaling-stroke;fill:#000000;fill-opacity:0;stroke:#000000;stroke-width:0.23779;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:1;-inkscape-stroke:hairline"
+       d="m 96,65.5 v 6.301301"
+       id="path35" />
+    <path
+       style="vector-effect:non-scaling-stroke;fill:#000000;fill-opacity:0;stroke:#000000;stroke-width:0.339231;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:1;-inkscape-stroke:hairline"
+       d="M 173,59.223746 V 71.776254"
+       id="path36" />
+    <path
+       style="vector-effect:non-scaling-stroke;fill:#000000;fill-opacity:0;stroke:#000000;stroke-width:0.264583;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:1;-inkscape-stroke:hairline"
+       d="m 167.70887,167.70779 -11.2092,5.3e-4"
+       id="path37" />
+    <path
+       style="vector-effect:non-scaling-stroke;fill:#000000;fill-opacity:0;stroke:#000000;stroke-width:0.264583;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:1;-inkscape-stroke:hairline"
+       d="M 157.66897,167.70779 157.52866,178"
+       id="path38" />
+    <path
+       style="vector-effect:non-scaling-stroke;fill:#000000;fill-opacity:0;stroke:#000000;stroke-width:0.264583;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:1;-inkscape-stroke:hairline"
+       d="M 42,4.4999999 V 1.9176588"
+       id="path39" />
+    <path
+       style="vector-effect:non-scaling-stroke;fill:#000000;fill-opacity:0;stroke:#000000;stroke-width:0.264583;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:1;-inkscape-stroke:hairline"
+       d="m 43.5,5.9999998 h 6.405901"
+       id="path40" />
+  </g>
 </svg>
