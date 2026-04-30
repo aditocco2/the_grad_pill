@@ -1,5 +1,6 @@
 #include <stdio.h>
 #include <stdint.h>
+#include <string.h>
 #include "pico/stdlib.h"
 #include "pico/rand.h"
 #include "pico/time.h"
@@ -9,27 +10,24 @@
 #include "hub75_text.h"
 #include "rgb565_colors.h"
 
-#define SWITCH_INTERVAL_INDEX 4
-#define USE_STATIC_MODE_INDEX 6
-#define RANDOMIZE_INDEX 7
-
-#define MEDIA_SECTOR_ADDR_INDEX 0
-#define N_FRAMES_INDEX 4
-#define FRAME_TIME_INDEX 8
-
-#define TABLE_ROW_WIDTH 16
-
 #define MAX_MEDIA 146
+#define TEXT_SCROLLING_PIXELS_PER_SECOND 20
+
+#define TEXT_INST_SEPARATION 15
 
 #define SECTORS_PER_FRAME (WIDTH * HEIGHT * 2 / BLOCK_SIZE)
 
 #define NUM_MEDIA_INDEX 0
+#define SWITCH_INTERVAL_INDEX 4
+#define USE_STATIC_MODE_INDEX 6
+#define RANDOMIZE_INDEX 7
+
+#define TABLE_ROW_WIDTH 16
 
 #define MEDIA_SECTOR_ADDR_INDEX 0
 #define N_FRAMES_INDEX 4
 #define FRAME_TIME_INDEX 8
-
-#define TABLE_ROW_WIDTH 16
+#define MEDIA_TYPE_INDEX 15
 
 #define MODESEL 14
 #define STATIC_SWITCH_VALUE 0
@@ -57,6 +55,8 @@ typedef struct{
 void main_fsm();
 
 void slideshow_media_index_fsm(player_data_t *ts, _Bool reset);
+_Bool text_scrolling_fsm(player_data_t *ts, char *str, _Bool reset);
+uint16_t color_cycle_rgb565_fsm(_Bool reset);
 _Bool player_get_metadata(player_data_t *ts, uint8_t *temp_buffer);
 _Bool player_load_media(player_data_t *ts, uint8_t *temp_buffer);
 _Bool player_get_frame(player_data_t *ts, uint8_t *frame_buffer);
@@ -76,7 +76,7 @@ int main(){
     stdio_init_all();
 
     hub75_configure();
-    hub75_set_brightness(20);
+    hub75_set_brightness(10);
 
     gpio_init(MODESEL);
     gpio_pull_up(MODESEL);
@@ -134,6 +134,8 @@ void main_fsm(){
             state = LOAD_MEDIA;
             break;
 
+        // might split video playing into its own fsm too, we will see.
+            
         case LOAD_MEDIA:
             if(ts.current_mode == STATIC){
                 ts.current_media_index = ts.pool_size;
@@ -142,11 +144,22 @@ void main_fsm(){
                 slideshow_media_index_fsm(&ts, false);
             }
             sd_succ = player_load_media(&ts, temp_buffer);
+
+            if(ts.current_media_type == TEXT){
+                sd_succ = text_scrolling_fsm(&ts, temp_buffer, true);
+            }
+
             state = LOAD_FRAME;
             break;
         
         case LOAD_FRAME:
-            sd_succ = player_get_frame(&ts, frame_buffer);
+            if(ts.current_media_type != TEXT){
+                sd_succ = player_get_frame(&ts, frame_buffer);
+            }
+            else{
+                text_scrolling_fsm(&ts, temp_buffer, false);
+            }
+            
             hub75_update();
             state = WAIT;
             break;
@@ -226,13 +239,126 @@ void slideshow_media_index_fsm(player_data_t *ts, _Bool reset){
     }
 
     ts->current_media_index = media_index_array[tag];
-
-    // printf("[ ");
-    // for(uint32_t i = 0; i < ts->pool_size; i++){
-    //     printf("%d ", media_index_array[i]);
-    // }
-    // printf("] -> %d\n", ts->current_media_index);
 }
+
+_Bool text_scrolling_fsm(player_data_t *ts, char *str, _Bool reset){
+    static enum {INIT, SCROLL} state;
+
+    static int16_t start_x, end_x;
+    static uint16_t color;
+
+    if(reset){
+        state = INIT;
+    }
+
+    switch(state){
+        case INIT:
+            start_x = WIDTH;
+
+            if(!sd_card_read_block(ts->media_address, str, BLOCK_SIZE)){
+                return false;
+            }
+
+            state = SCROLL;
+            break;
+            
+        case SCROLL:
+            // set screen black
+            for(uint8_t x = 0; x < WIDTH; x++){
+                for(uint8_t y = 0; y < HEIGHT; y++){
+                    hub75_set_pixel(x, y, 0);
+                }
+            }
+
+            start_x--;
+            end_x = start_x + strlen(str) * MEDIUM_FONT_WIDTH;
+
+            color = color_cycle_rgb565_fsm(false);
+
+            hub75_write_medium_text(str, start_x, HEIGHT/2, ALIGN_LEFT, ALIGN_CENTER, color);
+
+            // if there's still room after the text on the screen, make a second instance 
+            if(end_x < WIDTH - TEXT_INST_SEPARATION){
+                hub75_write_medium_text(str, end_x + TEXT_INST_SEPARATION, HEIGHT/2, 
+                                        ALIGN_LEFT, ALIGN_CENTER, color);
+            }
+
+            // if the 1st instance goes offscreen, make the second instance the new first instance
+            if(end_x <= 0){
+                start_x = TEXT_INST_SEPARATION;
+            }
+
+            break;
+    }
+
+    return true;
+}
+
+uint16_t color_cycle_rgb565_fsm(_Bool reset){
+
+    static enum {INCREASE_G, DECREASE_R, INCREASE_B, DECREASE_G, INCREASE_R, DECREASE_B} state;
+
+    // we are using rgb555 for simplicity here, will convert to rgb565 on the way out
+    static uint8_t r = 31;
+    static uint8_t g = 0;
+    static uint8_t b = 0;
+
+    if(reset){
+        state = INCREASE_G;
+        r = 31;
+        g = 0;
+        b = 0;
+    }
+
+    switch(state){
+        case INCREASE_G:
+            g++;
+            if(g == 31){
+                state = DECREASE_R;
+            }
+            break;
+            
+        case DECREASE_R:
+            r--;
+            if(r == 0){
+                state = INCREASE_B;
+            }
+            break;
+
+        case INCREASE_B:
+            b++;
+            if(b == 31){
+                state = DECREASE_G;
+            }
+            break;
+        
+        case DECREASE_G:
+            g--;
+            if(g == 0){
+                state = INCREASE_R;
+            }
+            break;
+
+        case INCREASE_R:
+            r++;
+            if(r == 31){
+                state = DECREASE_B;
+            }
+            break;
+
+        case DECREASE_B:
+            b--;
+            if(b == 0){
+                state = INCREASE_G;
+            }
+            break;   
+    }
+
+    // build the rgb565 pixel by shifting the green pixel 1 up
+    uint16_t pix = (r << 11) | (g << 6) | (b << 0);
+    return pix;
+}
+
 
 _Bool player_load_media(player_data_t *ts, uint8_t *temp_buffer){
     
@@ -250,17 +376,24 @@ _Bool player_load_media(player_data_t *ts, uint8_t *temp_buffer){
     ts->num_frames_in_current_media = *(uint32_t *)&temp_buffer[table_row_index + N_FRAMES_INDEX];
     ts->frame_duration_ms = *(uint16_t *)&temp_buffer[table_row_index + FRAME_TIME_INDEX];
 
-    ts->current_frame_num = 0;
+    char media_type_char = *(char *)&temp_buffer[table_row_index + MEDIA_TYPE_INDEX];
+    switch(media_type_char){
+        case 'i':
+            ts->current_media_type = IMAGE;
+            break;
+        case 'v':
+            ts->current_media_type = VIDEO;
+            add_repeating_timer_ms(ts->frame_duration_ms, frame_switch_cb, NULL, 
+                                   &frame_switch_timer);
+            break;
+        case 't':
+            ts->current_media_type = TEXT;
+            add_repeating_timer_ms(1000 / TEXT_SCROLLING_PIXELS_PER_SECOND, frame_switch_cb, NULL, 
+                                   &frame_switch_timer);
+            break;
+    }
 
-    // maybe replace with a new flag on the SD row, idk.
-    // the current_media_type is not currently used, but it will be if I do scrolling text
-    if(ts->num_frames_in_current_media > 1){
-        ts->current_media_type = VIDEO;
-        add_repeating_timer_ms(ts->frame_duration_ms, frame_switch_cb, NULL, &frame_switch_timer);
-    }
-    else{
-        ts->current_media_type = IMAGE;
-    }
+    ts->current_frame_num = 0;
 
     return true;
 }

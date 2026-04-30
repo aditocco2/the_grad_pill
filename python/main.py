@@ -6,8 +6,8 @@ from image_proc import *
 
 # ------------------- User Parameters ---------------------
 
-media_dir = "media_slideshow"
-sd_file = "raw/media.bin"
+media_dir = r"media_test"
+sd_file = r"raw/media_two.bin"
 
 width, height = 64, 64
 switch_interval = 10
@@ -106,19 +106,29 @@ def make_table_header(table, num_media):
 
 def make_table_rows(table, table_sectors, media_info_list):
     # Table Row Format:
-    # bytes 0 to 3 are the sector address of the first frame of the video
-    # bytes 4 to 7 are the number of frames in the video
-    # bytes 8 to 9 are how long each frame lasts in milliseconds
+    # bytes 0 through 3 are the sector address of the first frame of the video
+    # bytes 4 through 7 are the number of frames in the video
+    # bytes 8 and 9 are how long each frame lasts in milliseconds
+    # bytes 10 and 11 are currently unused
+    # byte 15 is whether it's image/video/text (1st character, so "i" for image, etc.)
     sector_num = table_sectors
     sectors_per_frame = math.ceil(width * height * 2 / 512)
     for index, info in enumerate(media_info_list):
+
         table_row = bytearray(16)
         table_row[0:4] = to_little_endian(sector_num, 4)
         table_row[4:8] = to_little_endian(info["n_frames"], 4)
         table_row[8:10] = to_little_endian(info["frame_time_ms"], 2)
+        table_row[15:16] = bytearray(info["media_type"][0], "utf-8")
 
         table[(index + 1) * 16 : (index + 2) * 16] = table_row
-        sector_num += (info["n_frames"] * sectors_per_frame)
+
+        if info["media_type"] == "image":
+            sector_num += sectors_per_frame
+        elif info["media_type"] == "video":
+            sector_num += (info["n_frames"] * sectors_per_frame)
+        else:
+            sector_num += 1
 
 
 def process_media(file):
@@ -132,28 +142,45 @@ def process_media(file):
             data_array = image_to_bytearray(file, width, height, stretch)
             media_info = {
                 "frame_time_ms": 0,
-                "n_frames": 1
+                "n_frames": 1,
+                "media_type": "image"
             }
         except:
             raise ProcessingFailedError
+        
     elif extension in video_types:
         try:
             data_array = video_to_bytearray(file, width, height, stretch)
             media_info = {
                 "frame_time_ms": get_video_frame_time_ms(file),
-                "n_frames": get_video_n_frames(file)
+                "n_frames": get_video_n_frames(file),
+                "media_type": "video"
             }
         except:
             raise ProcessingFailedError
+        
     elif extension == ".gif":
         try:
             data_array = gif_to_bytearray(file, width, height, stretch)
             media_info = {
                 "frame_time_ms": get_gif_frame_time_ms(file),
-                "n_frames": get_gif_n_frames(file)
+                "n_frames": get_gif_n_frames(file),
+                "media_type": "video"
             }
         except:
             raise ProcessingFailedError
+
+    elif extension == ".txt":
+        try:
+            data_array = text_to_bytearray(file)
+            media_info = {
+                "frame_time_ms": 0,
+                "n_frames": 0,
+                "media_type": "text"
+            }
+        except:
+            raise ProcessingFailedError
+
     else: # file not supported
         raise FileNotSupportedError
 

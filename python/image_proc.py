@@ -78,6 +78,17 @@ def image_to_bytearray(image, width, height, stretch=True):
 
     return pixels
 
+
+def text_to_bytearray(file):
+
+    ba = bytearray(512)
+    with open(file, "r") as f:
+        text = f.read()
+    length = len(text)
+    ba[0:length] = bytearray(text, "utf-8")
+
+    return ba
+
 class FileNotSupportedError(Exception):
     """File not supported"""
     pass
