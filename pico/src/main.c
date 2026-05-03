@@ -76,7 +76,7 @@ int main(){
     stdio_init_all();
 
     hub75_configure();
-    hub75_set_brightness(10);
+    hub75_set_brightness(20);
 
     gpio_init(MODESEL);
     gpio_pull_up(MODESEL);
@@ -128,8 +128,10 @@ void main_fsm(){
             }
             else{
                 ts.current_mode = SLIDESHOW;
-                add_repeating_timer_ms(ts.switch_interval_s * 1000, media_switch_cb, NULL, 
-                                       &media_switch_timer);
+                if(ts.pool_size > 1){
+                    add_repeating_timer_ms(ts.switch_interval_s * 1000, media_switch_cb, NULL, 
+                                           &media_switch_timer);
+                }
             }
             state = LOAD_MEDIA;
             break;

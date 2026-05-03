@@ -6,8 +6,8 @@ from image_proc import *
 
 # ------------------- User Parameters ---------------------
 
-media_dir = r"media_test"
-sd_file = r"raw/media_two.bin"
+media_dir = r"media_slideshow"
+sd_file = r"raw/media.bin"
 
 width, height = 64, 64
 switch_interval = 10
