@@ -65,6 +65,7 @@ uint16_t color_cycle_rgb565_fsm(_Bool reset);
 _Bool mode_switched(player_data_t *ts);
 void fill_array_sequentially(uint32_t *arr, uint32_t len);
 void shuffle_array(uint32_t *arr, uint32_t len);
+void clear_screen();
 
 // Basic timer callbacks that just set flags
 struct repeating_timer media_switch_timer, frame_switch_timer;
@@ -88,7 +89,8 @@ int main(){
 }
 
 void main_fsm(){
-    static enum {INIT, GET_METADATA, SWITCH_MODE, LOAD_MEDIA, INITIALIZE_MEDIA, PLAY_MEDIA} state;
+    static enum {INIT, GET_METADATA, INVALID_CARD, SWITCH_MODE, 
+                 LOAD_MEDIA, INITIALIZE_MEDIA, PLAY_MEDIA} state;
 
     static player_data_t ts;
     
@@ -98,11 +100,7 @@ void main_fsm(){
     uint8_t *frame_buffer = (uint8_t *)hub75_get_back_buffer();
 
     if(!sd_succ){
-        for(uint8_t x = 0; x < WIDTH; x++){
-            for(uint8_t y = 0; y < HEIGHT; y++){
-                hub75_set_pixel(x, y, 0);
-            }
-        }
+        clear_screen();
         hub75_write_large_text("Insert", 32, 32, ALIGN_CENTER, ALIGN_BOTTOM, RGB565_Red);
         hub75_write_large_text("SD Card", 32, 32, ALIGN_CENTER, ALIGN_TOP, RGB565_Red);
         hub75_update();
@@ -117,8 +115,22 @@ void main_fsm(){
 
         case GET_METADATA:
             sd_succ = player_get_metadata(&ts, temp_buffer);
-            slideshow_media_index_fsm(&ts, true);
-            state = SWITCH_MODE;
+            
+            if((*(uint32_t *)&temp_buffer[12]) == 0xe3bedded){
+                slideshow_media_index_fsm(&ts, true);
+                state = SWITCH_MODE;
+            }
+            else{
+                state = INVALID_CARD;
+            }
+            break;
+
+        case INVALID_CARD:
+            clear_screen();
+            hub75_write_large_text("Invalid", 32, 32, ALIGN_CENTER, ALIGN_BOTTOM, RGB565_Red);
+            hub75_write_large_text("SD Card", 32, 32, ALIGN_CENTER, ALIGN_TOP, RGB565_Red);
+            hub75_update();
+            sd_succ = sd_card_check_status();
             break;
 
         case SWITCH_MODE:
@@ -323,12 +335,7 @@ _Bool text_scrolling_fsm(player_data_t *ts, char *str, _Bool reset){
             break;
             
         case SCROLL:
-            // set screen black
-            for(uint8_t x = 0; x < WIDTH; x++){
-                for(uint8_t y = 0; y < HEIGHT; y++){
-                    hub75_set_pixel(x, y, 0);
-                }
-            }
+            clear_screen();
             
             color = color_cycle_rgb565_fsm(false);
 
@@ -439,5 +446,13 @@ void shuffle_array(uint32_t *arr, uint32_t len){
         uint32_t temp = arr[j];
         arr[j] = arr[i];
         arr[i] = temp;
+    }
+}
+
+void clear_screen(){
+    for(uint8_t x = 0; x < WIDTH; x++){
+        for(uint8_t y = 0; y < HEIGHT; y++){
+            hub75_set_pixel(x, y, RGB565_Black);
+        }
     }
 }

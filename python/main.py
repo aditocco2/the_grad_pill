@@ -2,7 +2,7 @@ import os
 import math
 import shutil
 import warnings
-from image_proc import *
+from file_proc import *
 
 # ------------------- User Parameters ---------------------
 
@@ -108,11 +108,13 @@ def make_table_header(table, num_media):
     # bytes 4 to 5 are how many seconds between switching
     # byte 6 is whether to include static mode
     # byte 7 is whether to randomize playback
+    # bytes 12 through 15 are the magic number to confirm it's a valid SD card
     table_row = bytearray(16)
     table_row[0:4] = to_little_endian(num_media, 4)
     table_row[4:6] = to_little_endian(int(switch_interval), 2)
     table_row[6] = 1 if use_static_mode else 0
     table_row[7] = 1 if randomize else 0
+    table_row[12:16] = to_little_endian(0xe3bedded, 4)
     table[0:16] = table_row
 
 
@@ -193,7 +195,7 @@ def process_media(file):
         except:
             raise ProcessingFailedError
 
-    else: # file not supported
+    else:
         raise FileNotSupportedError
 
     return media_info, data_array
