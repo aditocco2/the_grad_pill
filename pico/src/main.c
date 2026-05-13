@@ -12,7 +12,7 @@
 #include "hub75_text.h"
 #include "rgb565_colors.h"
 
-#define MAX_MEDIA 146
+#define MAX_MEDIA 300
 #define TEXT_SCROLLING_PIXELS_PER_SECOND 40
 
 #define TEXT_INST_SEPARATION 16

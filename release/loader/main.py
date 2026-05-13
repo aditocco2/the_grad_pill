@@ -34,11 +34,24 @@ static_mode_image = r"media_static/happy.gif"
 def main():
     global use_static_mode
 
+    RED = '\033[91m'
+    RESET = '\033[0m'
+
     warnings.filterwarnings("ignore")
 
-    media_files = [f"{media_dir}/{f}" for f in os.listdir(media_dir)]
-    file_count = len(media_files) + (1 if use_static_mode else 0)
+    # find every file in the folder AND its subfolders
+    media_files = []
+    for root, dir, files in os.walk(media_dir):
+        for file in files:
+            media_files.append(os.path.join(root, file))
 
+    # panic if no media files found
+    if len(media_files) == 0:
+        print(f"{RED}No files found in {media_dir}{RESET}")
+        exit(1)
+
+    file_count = len(media_files) + (1 if use_static_mode else 0)
+        
     data_file = open("temp_data.bin", "wb")
 
     # Keep all media info, as we need to dynamically change sector addresses later
@@ -46,9 +59,6 @@ def main():
 
     # Keep track of how many files were successfully processed
     num_media = 0
-
-    RED = '\033[91m'
-    RESET = '\033[0m'
     # Slideshow Mode
     for i, file in enumerate(media_files):
         try:
@@ -62,7 +72,7 @@ def main():
             print(f"{RED}Failed to process {file} ({i+1}/{file_count}){RESET}")
         except FileNotSupportedError:
             print(f"{RED}File {file} not supported ({i+1}/{file_count}){RESET}")
-    
+
     # Static Mode
     if(use_static_mode):
         try:
@@ -147,7 +157,7 @@ def make_table_rows(table, table_sectors, media_info_list):
 
 def process_media(file):
 
-    image_types = [".png", ".jpg", ".jpeg"]
+    image_types = [".png", ".jpg", ".jpeg", ".webp"]
     video_types = [".mp4", ".mov", ".avi", ".mkv"]
     
     extension = os.path.splitext(file)[1].lower()
